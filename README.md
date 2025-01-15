@@ -2,7 +2,7 @@
 
 [My Notes](notes.md)
 
-My startup application is to create an online game site for mancala. Clients will be able to login and challenge other players to a game of mancala.
+My startup application is to create an online game site for mancala. Clients will be able to login and challenge other players to a game of mancala. They will be able to create 
 
 ## 🚀 Specification Deliverable
 
@@ -12,16 +12,8 @@ Did you grow up playing the amazing game Mancala, but now no longer have the phy
 
 ### Design
 
-![Design image](placeholder.png)
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-```mermaid
-sequenceDiagram
-    actor You
-    actor Website
-    You->>Website: Replace this with your design
-```
+![Login Design.](Resources.login.png)
+![Play and About Design.](Resources.play-about.png)
 
 ### Key features
 
