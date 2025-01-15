@@ -12,8 +12,8 @@ Did you grow up playing the amazing game Mancala, but now no longer have the phy
 
 ### Design
 
-![Login Design.](Resources.login.png)
-![Play and About Design.](Resources.play-about.png)
+![Login Design.](Resources/login.png)
+![Play and About Design.](Resources/play-about.png)
 
 ### Key features
 
