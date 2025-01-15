@@ -8,7 +8,7 @@ My startup application is to create an online game site for mancala. Clients wil
 
 ### Elevator pitch
 
-Did you grow up playing the amazing game Mancala, but now no longer have the physical game? Do you wish you could play Mancala with friends who live far away? Well you have found your solution here at PlayMancala. This is an easy to access site that lets you play the classic game of mancala anywhere with anyone. Whether you are new to the game or are a seasoned master PlayMancala is the perfect solution for you.
+Did you grow up playing the amazing game Mancala, but now no longer have the physical game? Or do you wish you could play Mancala with friends who live far away? Well you have found your solution here at PlayMancala! This is a very easy to access site that lets you play the classic game of mancala anywhere with anyone! Whether you are new to the game or are a seasoned master, PlayMancala is the perfect solution for you.
 
 ### Design
 
@@ -34,7 +34,7 @@ I am going to use the required technologies in the following ways.
 - **React** - Achieve all desired functionality for buttons. This includes loging in, joining games, creating games, and turnstyle gameplay.
 - **Service** - Will use an outside service to provide quotes on my about page.
 - **DB/Login** - Will have a table to store login information. Will also have a table to store games.
-- **WebSocket** - Realtime data transfer for gameplay.
+- **WebSocket** - Realtime user to user data transfer for gameplay.
 
 ## 🚀 AWS deliverable
 
