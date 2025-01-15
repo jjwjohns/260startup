@@ -2,7 +2,7 @@
 
 [My Notes](notes.md)
 
-My startup application is to create an online game site for mancala. Clients will be able to login and challenge other players to a game of mancala. They will be able to create 
+My startup application is to create an online game site for mancala. Clients will be able to login and challenge other players to a game of mancala. They will be able to create games or join existing games and then play through a game of mancala taking turns until the game is over.
 
 ## 🚀 Specification Deliverable
 
