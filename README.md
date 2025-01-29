@@ -54,15 +54,15 @@ In the play page I have placeholders for where the mancala UI will be displayed 
 
 I added placeholders for all future portions of the project.
 
-- [X] **HTML pages** - I added 
-- [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [ ] **Links** - I did not complete this part of the deliverable.
-- [ ] **Text** - I did not complete this part of the deliverable.
-- [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
-- [ ] **Images** - I did not complete this part of the deliverable.
-- [ ] **Login placeholder** - I did not complete this part of the deliverable.
-- [ ] **DB data placeholder** - I did not complete this part of the deliverable.
-- [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- [X] **HTML pages** - I added three html pages with proper structure. They are, index, play, and about. 
+- [X] **Proper HTML element usage** - I added proper html elements for headers, links, paragraph lines, tables, etc.
+- [X] **Links** - I added a link to my github in the footer, and three nav links in the header to the three html pages.
+- [X] **Text** - I added text in the about page explaining mancala and throughout the other pages as well.
+- [X] **3rd party API placeholder** - I put a placeholder for a quote api generator in the about page.
+- [X] **Images** - I added two images. One of mancala being played in the about page and the other is a placeholder for the game.
+- [X] **Login placeholder** - I added a login placeholder for the index page.
+- [X] **DB data placeholder** - I added a table to show the games database. Also the game itself will have its state stored in a database.
+- [X] **WebSocket placeholder** - The game image is the websocket placeholder. There websocket will communicate moves made between two clients.
 
 ## 🚀 CSS deliverable
 
