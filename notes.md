@@ -19,7 +19,9 @@ No problems worked just like it said in the [instruction](https://github.com/web
 
 ## HTML
 
-This was easy. I have done a lot of stuff in the past with html so it was just a task of remembering certain formatting issues.
+This was easy. I have done a lot of stuff in the past with html so it was just a task of remembering certain formatting issues.<br>
+I added three html pages for the login, play, and about pages. I added some images to the Resources directory which were imported into the html pages.<br>
+I added nav elements to the header of each of the pages. I added an index page for the login, an about page to share some general information and serve up quotes from a server.
 
 ## CSS
 

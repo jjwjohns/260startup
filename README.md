@@ -46,7 +46,15 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **HTML pages** - I did not complete this part of the deliverable.
+I added three html pages for the login, play, and about pages. I added some images to the Resources directory which were imported into the html pages.
+
+I added nav elements to the header of each of the pages. I added an index page for the login, an about page to share some general information and serve up quotes from a server.
+
+In the play page I have placeholders for where the mancala UI will be displayed and a table for the possible games to join as well.
+
+I added placeholders for all future portions of the project.
+
+- [X] **HTML pages** - I added 
 - [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
 - [ ] **Links** - I did not complete this part of the deliverable.
 - [ ] **Text** - I did not complete this part of the deliverable.
