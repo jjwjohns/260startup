@@ -1,6 +1,7 @@
 # CS 260 Notes
 
-[My startup - Simon](https://simon.jjwjohns-byu.click)
+[My startup - Simon](https://simon.jjohns-byu.click)
+[My startup](https://startup.jjohns-byu.click)
 
 ## Helpful links
 
