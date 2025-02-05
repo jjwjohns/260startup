@@ -33,34 +33,43 @@
     </header>
 
     <main class="container-fluid text-center">
-        <table class="container-fluid text-center" border="1">
-            <tr>
-                <th>Games</th>
-                <th>Player1</th>
-                <th>Date</th>
-                <th>Time</th>
-            </tr>
-            <tr>
-                <td>game1</td>
-                <td>john</td>
-                <td>friday the 13th</td>
-                <td>13:00</td>
-            </tr>
-            <tr>
-                <td>game2</td>
-                <td>Steve</td>
-                <td>today</td>
-                <td>2pm</td>
-            </tr>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped">
+            <thead class="table-success text-center">
+                <tr>
+                    <th>Games</th>
+                    <th>Player1</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>game1</td>
+                    <td>John</td>
+                    <td>Friday the 13th</td>
+                    <td>13:00</td>
+                </tr>
+                <tr>
+                    <td>game2</td>
+                    <td>Steve</td>
+                    <td>Today</td>
+                    <td>2pm</td>
+                </tr>
+            </tbody>
         </table>
-        <p>The above table is a placeholder for a future table displaying a database of joinable games.</p>
+    </div>
+    
+      <p>The above table is a placeholder for a future table displaying a database of joinable games.</p>
 
+      <div>
         <button type="button" class="btn-sm btn-secondary">Join</button>
         <button type="button" class="btn-sm btn-secondary">Create</button> <br><br>
+      </div>
 
 
-        <img src="Resources/Mancala_board.JPG" alt="Mancala game" width="600" height="300"><br>
-        <p>This is a placeholder for a Mancala board UI. This is also where game play will happen and turns will be sent via websocket.</p>
+      <img src="Resources/Mancala_board.JPG" alt="Mancala game" width="600" height="300"><br>
+      <p>This is a placeholder for a Mancala board UI. This is also where game play will happen and turns will be sent via websocket.</p>
     </main>
 
     <footer class="bg-dark text-white-50 container-fluid">
