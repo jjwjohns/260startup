@@ -61,12 +61,12 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Header, footer, and main content body** - I did not complete this part of the deliverable.
-- [ ] **Navigation elements** - I did not complete this part of the deliverable.
-- [ ] **Responsive to window resizing** - I did not complete this part of the deliverable.
-- [ ] **Application elements** - I did not complete this part of the deliverable.
-- [ ] **Application text content** - I did not complete this part of the deliverable.
-- [ ] **Application images** - I did not complete this part of the deliverable.
+- [X] **Header, footer, and main content body** - I stylized all three content sections and implemented flex box into them as well.
+- [X] **Navigation elements** - I dropped the underline and spaced and stylized them. I also made it so they highlight when the mouse hovers over them.
+- [X] **Responsive to window resizing** - I made my application responsive to window resizing and my nav elements go into a dropdown window on smaller sizes.
+- [X] **Application elements** - Everything is spaced out well and the application looks clean.
+- [X] **Application text content** - Consistent fonts and colorings.
+- [X] **Application images** - Image for the about page is still there with a stylized title centered in it. I also replaced the mancala placeholder image with CSS.
 
 ## 🚀 React part 1: Routing deliverable
 
