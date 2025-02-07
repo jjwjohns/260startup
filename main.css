@@ -1,9 +1,20 @@
+html, body {
+    height: 100%;
+    margin: 0; 
+    font-family: Georgia, 'Times New Roman', Times, serif, sans-serif;
+}
+
 body {
     display: flex;
     flex-direction: column;
-    margin: 0;
-    height: 100vh;
-  }
+}
+
+header {
+    flex: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
 
 main {
     flex: 1;
@@ -11,20 +22,29 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
 }
 
-header {
-    flex: 0 80px;
-    background: hsl(223, 57%, 38%);
-    
-}
-  
 footer {
-flex: 0 30px;
-background: hsl(180, 10%, 10%);
+    flex: 0;
 }
 
 #logo {
     padding-left: 20px;
+}
+
+a.navbar-brand {
+    color: cornflowerblue;
+    font-family: Georgia, 'Times New Roman', Times, serif, sans-serif;
+    margin-left: 20px;
+}
+
+footer a {
+    text-align: right;
+}
+
+h3 {
+    color: cornflowerblue;
+    font-family: Georgia, 'Times New Roman', Times, serif, sans-serif;
+    margin-left: 20px;
+    text-align: left;
 }
