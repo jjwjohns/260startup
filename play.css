@@ -5,3 +5,75 @@ main {
 h1 {
     padding: 12px;
 }
+
+/* .mancala-board {
+    display: flex;
+    align-items: center;
+    background: #8B5A2B;
+    border-radius: 20px;
+    padding: 20px;
+    width: 800px;
+    height: 350px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+} */
+
+.mancala-board {
+    display: flex;
+    align-items: center;
+    background: #8B5A2B;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 50px;
+    min-width: 400px;
+    min-height: 100px;
+    height: 50%;
+    width: 80%;
+}
+
+.pits-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+
+
+.row {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+}
+
+.pit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 12%;
+    height: 50px;
+    border: 1px solid #000;
+    border-radius: 25%;
+    margin: 1%;
+    background-color: #cd8039;
+}
+.store {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 75px;
+    height: 200px;
+    border: 1px solid #000;
+    border-radius: 25%;
+    margin: 10px;
+    background-color: #cd8039;
+}
+
+.top-row {
+    margin-bottom: 10px;
+}
+
+.bottom-row {
+    margin-top: 10px;
+}
