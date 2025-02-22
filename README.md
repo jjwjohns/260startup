@@ -72,9 +72,9 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Bundled using Vite** - I did not complete this part of the deliverable.
-- [ ] **Components** - I did not complete this part of the deliverable.
-- [ ] **Router** - Routing between login and voting components.
+- [X] **Bundled using Vite** - I downloaded vite and used it to bundle my application and run it in build dev mode.
+- [X] **Components** - I have three react components that is connected to the router to import my main section. They are login, play, and about. They all work as they should.
+- [X] **Router** - I added the router in app.jsx which correctly routes to the different components.
 
 ## 🚀 React part 2: Reactivity
 
