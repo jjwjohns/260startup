@@ -5,7 +5,7 @@ export function About() {
   return (
     <main className="container-fluid text-center">
       <div className="image-container">
-        <img src="Resources/Mancala_dirt.jpg" alt="Mancala being played in the dirt"></img>
+        <img src="Resources/Mancala_dirt.webp" alt="Mancala being played in the dirt"></img>
         <div className="overlay-text">What is Mancala??</div>
        </div>
     
