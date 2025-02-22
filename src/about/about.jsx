@@ -14,7 +14,7 @@ export function About() {
         The game has persisted to the modern age with most people having played it before, or having at least heard of it. 
         Here on Mancala Online you can learn how to play with your friends without having the necessity of a board or stones!
       </p>
-      <h3>How You Play</h3>
+      <h3 id="ah3">How You Play</h3>
       <ol className="text-start">
         <li>First you decide who goes first</li>
         <li>Then you take turns making moves. You make a move by choosing a pit in your side and pick up all the seeds it had. Then you distribute one seed for each succeeding pit (moving counterclockwise) until all the seeds in the chosen pit have been placed.</li>

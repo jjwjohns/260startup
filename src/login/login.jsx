@@ -3,7 +3,7 @@ import './login.css';
 
 export function Login() {
   return (
-    <main className="container-fluid text-center">
+    <main id="pmain" className="container-fluid text-center">
       <h1>Welcome to Online Mancala</h1>
       <h3>Sign in to play!</h3>
       <form method="get" action="play.html">

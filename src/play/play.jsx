@@ -3,7 +3,7 @@ import './play.css';
 
 export function Play() {
   return (
-    <main className="container-fluid text-center">
+    <main id="pmain" className="container-fluid text-center">
       <h1>Available Games</h1>
       <div className="table-responsive w-75">
         <table className="table table-bordered table-hover table-striped">
@@ -45,7 +45,7 @@ export function Play() {
     </div>
 
       <div className = "p-3">
-        <button type="button" className="btn btn-primary">Join</button>
+        <button type="button" className="btn btn-primary">Join</button> 
         <button type="button" className="btn btn-secondary">Create</button>
       </div>
 
