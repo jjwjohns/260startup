@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
-import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Link, NavLink, Route, Routes } from 'react-router-dom';
 import { Login } from './login/login';
 import { Play } from './play/play';
 import { About } from './about/about';
@@ -12,7 +12,7 @@ export default function App() {
         <div>
             <header className="container-fluid p-0">
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                    <a id = "logo" className="navbar-brand" href="play.html">Mancala</a>
+                    <Link to="play" className="navbar-brand">Mancala</Link>
                     
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
