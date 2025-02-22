@@ -1,8 +1,2 @@
+/.vscode
 /node_modules
-**/.DS_Store
-**/vscode
-node_modules/
-/node_modules
-./node_modules
-*/node_modules
-node_modules/*
