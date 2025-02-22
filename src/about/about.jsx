@@ -1,11 +1,12 @@
 import React from 'react';
 import './about.css';
+import mancala_dirt from './../../public/Mancala_dirt.webp';
 
 export function About() {
   return (
     <main className="container-fluid text-center">
       <div className="image-container">
-        <img src="/../../public/Mancala_dirt.webp" alt="Mancala being played in the dirt"></img>
+        <img src={mancala_dirt} alt="Mancala being played in the dirt"></img>
         <div className="overlay-text">What is Mancala??</div>
        </div>
     
