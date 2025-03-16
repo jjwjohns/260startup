@@ -25,11 +25,15 @@ export default function App() {
                                     Login
                                 </NavLink>
                                 </li>
+
+                                {authState === AuthState.Authenticated && (
                                 <li className="nav-item">
                                 <NavLink className="nav-link" to="play">
                                     Play
                                 </NavLink>
                                 </li>
+                                )}
+
                                 <li className="nav-item">
                                 <NavLink className="nav-link" to="about">
                                     About
@@ -41,7 +45,21 @@ export default function App() {
             </header>
 
             <Routes>
-                <Route path='/' element={<Login />} exact />
+                <Route path='/' element={
+                    <Login 
+                        userName={userName}
+                        authState={authState}
+                        onAuthChange={(userName, authState) => {
+                            setAuthState(authState);
+                            setUserName(userName);
+                          }}
+                    />} 
+                    
+
+                    exact 
+                />
+
+
                 <Route path='/play' element={<Play />} />
                 <Route path='/about' element={<About />} />
                 <Route path='*' element={<NotFound />} />
