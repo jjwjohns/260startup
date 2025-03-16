@@ -65,7 +65,7 @@ export default function App() {
                 />
 
 
-                <Route path='/play' element={<Play />} />
+                <Route path='/play' element={<Play userName={userName} />} />
                 <Route path='/about' element={<About />} />
                 <Route path='*' element={<NotFound />} />
             </Routes>

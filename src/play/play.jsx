@@ -1,10 +1,13 @@
 import React from 'react';
 import './play.css';
 
-export function Play() {
+export function Play(props) {
   return (
     <main id="pmain" className="container-fluid text-center">
-      <h1>Available Games</h1>
+      <div id = "pheader">
+        <p>Logged in as <span style={{ color: "blue" }}>{props.userName}</span></p>
+        <h1>Available Games</h1>
+      </div>
       <div className="table-responsive w-75">
         <table className="table table-bordered table-hover table-striped">
             <thead className="table-primary text-center">
@@ -45,12 +48,12 @@ export function Play() {
     </div>
 
       <div className = "p-3">
-        <button type="button" className="btn btn-primary">Join</button> 
-        <button type="button" className="btn btn-secondary">Create</button>
+        <button id = "custom-button" type="button" className="btn btn-primary">Join</button> 
+        <button id = "custom-button" type="button" className="btn btn-secondary">Create</button>
       </div>
 
       <div className="mancala-board">
-        <div className="store left-store">Player1</div>
+        <div className="store left-store">0</div>
         <div className="pits-container">
             <div className="row top-row">
                 <div className="pit">4</div>
@@ -69,7 +72,7 @@ export function Play() {
                 <div className="pit">4</div>
             </div>
         </div>
-        <div className="store right-store">Player2</div>
+        <div className="store right-store">0</div>
       </div>
     </main>
   );

@@ -78,3 +78,28 @@ h1 {
     margin-top: 10px;
 }
 
+
+#pheader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    padding: 10px;
+}
+
+#pheader p {
+    position: absolute;
+    left: 0;
+    margin-left: 10px;
+}
+
+#pheader h2 {
+    text-align: center;
+}
+
+#custom-button {
+    margin: 10px;
+    height: 40px;
+    width: 80px;
+}
