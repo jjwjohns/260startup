@@ -1,6 +1,6 @@
 import React from 'react';
 import './about.css';
-import mancala_dirt from './../../public/Mancala_dirt.webp';
+import mancala_dirt from './../../src/Mancala_dirt.webp';
 
 export function About(props) {
   const [quote, setQuote] = React.useState('Loading...');

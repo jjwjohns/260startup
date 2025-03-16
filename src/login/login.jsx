@@ -4,8 +4,6 @@ import { Unauthenticated } from './unauthenticated';
 import { Authenticated } from './authenticated';
 import { AuthState } from './authstate';
 
-import './login.css';
-
 
 export function Login({ userName, authState, onAuthChange }) {
   return (

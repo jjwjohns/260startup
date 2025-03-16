@@ -14,10 +14,10 @@ export default function App() {
     const [authState, setAuthState] = React.useState(currentAuthState);
   return (
     <BrowserRouter>
-        <div>
+        <div id = "app" className="d-flex flex-column">
             <header className="container-fluid p-0">
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                    <Link to="play" className="navbar-brand">Mancala</Link>
+                    <h3 className="navbar-brand"> Mancala</h3>
                     
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
