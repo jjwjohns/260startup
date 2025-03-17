@@ -80,8 +80,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **All functionality implemented or mocked out** - I did not complete this part of the deliverable.
-- [ ] **Hooks** - I did not complete this part of the deliverable.
+- [X] **All functionality implemented or mocked out** - I fully implemented the mancala gameplay. Set with turns end game evaluation and special rules. I also set everything up to render based on what state you are in authorized/logged in and in a game or night. I also implemented a dynamic table where you can create games and then join them. This will be a little different moving forward because when you create a game you will automatically join it and joining is used to join other people's games. I also implemented a basic bot for the user to play against for this deliverable.
+- [X] **Hooks** - I used useState and useEffect to be able to store all of the variable and states.
 
 ## 🚀 Service deliverable
 
