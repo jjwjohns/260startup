@@ -68,27 +68,28 @@ export class MancalaLogic {
     }
 
     static endGame(slots) {
-      slots[7] = slots[1] + slots[2] + slots[3] + slots[4] + slots[5] + slots[6];
-      slots[0] = slots[8] + slots[9] + slots[10] + slots[11] + slots[12] + slots[13];
-      slots[1] = 0;
-      slots[2] = 0;
-      slots[3] = 0;
-      slots[4] = 0;
-      slots[5] = 0;
-      slots[6] = 0;
-      slots[8] = 0;
-      slots[9] = 0;
-      slots[10] = 0;
-      slots[11] = 0;
-      slots[12] = 0;
-      slots[13] = 0;
-      if (slots[7] > slots[0]) {
-        return {slots: slots, winner: 1};
+      const newSlots = [...slots];
+      newSlots[7] = newSlots[7] + newSlots[1] + newSlots[2] + newSlots[3] + newSlots[4] + newSlots[5] + newSlots[6];
+      newSlots[0] = newSlots[0] + newSlots[8] + newSlots[9] + newSlots[10] + newSlots[11] + newSlots[12] + newSlots[13];
+      newSlots[1] = 0;
+      newSlots[2] = 0;
+      newSlots[3] = 0;
+      newSlots[4] = 0;
+      newSlots[5] = 0;
+      newSlots[6] = 0;
+      newSlots[8] = 0;
+      newSlots[9] = 0;
+      newSlots[10] = 0;
+      newSlots[11] = 0;
+      newSlots[12] = 0;
+      newSlots[13] = 0;
+      if (newSlots[7] > newSlots[0]) {
+        return {slots: newSlots, winner: 1};
       }
-      else if (slots[0] > slots[7]) {
-        return {slots: slots, winner: 2};
+      else if (newSlots[0] > newSlots[7]) {
+        return {slots: newSlots, winner: 2};
       }
-      return {slots: slots, winner: 0};
+      return {slots: newSlots, winner: 0};
     }
 }
 

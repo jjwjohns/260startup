@@ -34,30 +34,11 @@ export function Joined(props) {
 
     async function aiMove(oldSlots) {
         await delay(2000);
-        let randomNumber = Math.floor(Math.random() * (13 - 8 + 1)) + 8;
-        while (oldSlots[randomNumber] == 0){
-            randomNumber = Math.floor(Math.random() * (13 - 8 + 1)) + 8;
-        }
-        
-        let { newSlots, goAgain } = MancalaLogic.makeMove(oldSlots, 2, randomNumber);
-        // while (newSlots == oldSlots){
-        //     let randomNumber = Math.floor(Math.random() * (13 - 8 + 1)) + 8;
-        //     while (oldSlots[randomNumber] == 0){
-        //         randomNumber = Math.floor(Math.random() * (13 - 8 + 1)) + 8;
-        //     }
-
-        //     ({ newSlots, goAgain } = MancalaLogic.makeMove(oldSlots, 2, randomNumber));
-        // }
-        
-        setMancalaSlots(newSlots);
-        await new Promise(resolve => setTimeout(resolve, 0));
-        await delay(500);
-
-        if (MancalaLogic.checkEndGame(newSlots, 2)) {
-            const { finalSlots, winner } = MancalaLogic.endGame(newSlots);
-            // setMancalaSlots(finalSlots);
-            // await new Promise(resolve => setTimeout(resolve, 500));
-            // await delay(1000);
+        if (MancalaLogic.checkEndGame(oldSlots, 2)) {
+            const { slots: finalSlots, winner } = MancalaLogic.endGame(oldSlots);
+            setMancalaSlots(finalSlots);
+            await new Promise(resolve => setTimeout(resolve, 500));
+            await delay(1000);
             if (winner == 0) {
                 alert("It's a tie!");
             }
@@ -71,6 +52,18 @@ export function Joined(props) {
             onPressedQuit();
             return;
         }
+
+
+        let randomNumber = Math.floor(Math.random() * (13 - 8 + 1)) + 8;
+        while (oldSlots[randomNumber] == 0){
+            randomNumber = Math.floor(Math.random() * (13 - 8 + 1)) + 8;
+        }
+        
+        let { newSlots, goAgain } = MancalaLogic.makeMove(oldSlots, 2, randomNumber);
+        
+        setMancalaSlots(newSlots);
+        await new Promise(resolve => setTimeout(resolve, 0));
+        await delay(500);
 
         if (goAgain) {
             await aiMove(newSlots);
@@ -82,17 +75,12 @@ export function Joined(props) {
             return;
         }
         setIsWaiting(true);
-        const { newSlots, goAgain } = MancalaLogic.makeMove(mancalaSlots, 1, pitIndex);
-        
-        setMancalaSlots(newSlots);
-        await new Promise(resolve => setTimeout(resolve, 0));
-        await delay(500);
 
-        if (MancalaLogic.checkEndGame(newSlots, 1)) {
-            const { finalSlots, winner } = MancalaLogic.endGame(newSlots);
-            // setMancalaSlots(finalSlots);
-            // await new Promise(resolve => setTimeout(resolve, 0));
-            // await delay(1000);
+        if (MancalaLogic.checkEndGame(mancalaSlots, 1)) {
+            const { finalSlots, winner } = MancalaLogic.endGame(mancalaSlots);
+            setMancalaSlots(finalSlots);
+            await new Promise(resolve => setTimeout(resolve, 0));
+            await delay(1000);
 
             if (winner == 0) {
                 alert("It's a tie!");
@@ -107,6 +95,12 @@ export function Joined(props) {
             onPressedQuit();
             return;
         }
+
+        const { newSlots, goAgain } = MancalaLogic.makeMove(mancalaSlots, 1, pitIndex);
+        
+        setMancalaSlots(newSlots);
+        await new Promise(resolve => setTimeout(resolve, 0));
+        await delay(500);
 
         if (goAgain) {
             setIsWaiting(false);
