@@ -33,25 +33,25 @@ export function NotJoined(props) {
         setSelectedGame(index);
     }
 
-    const gameRows = [];
-    if (props.games.length) {
-    for (const [i, game] of props.games.entries()) {
-        gameRows.push(
-        <tr key={i}>
-            <td>{i+1}</td>
-            <td>{game.name}</td>
-            <td>{game.date}</td>
-            <td>{game.time}</td>
-        </tr>
-        );
-    }
-    } else {
-    gameRows.push(
-        <tr key='0'>
-        <td colSpan='4'>Create the first game!</td>
-        </tr>
-    );
-    }
+    // const gameRows = [];
+    // if (props.games.length) {
+    // for (const [i, game] of props.games.entries()) {
+    //     gameRows.push(
+    //     <tr key={i}>
+    //         <td>{i+1}</td>
+    //         <td>{game.name}</td>
+    //         <td>{game.date}</td>
+    //         <td>{game.time}</td>
+    //     </tr>
+    //     );
+    // }
+    // } else {
+    // gameRows.push(
+    //     <tr key='0'>
+    //     <td colSpan='4'>Create the first game!</td>
+    //     </tr>
+    // );
+    // }
 
   return (
     <div id = "notjoined">
@@ -67,7 +67,8 @@ export function NotJoined(props) {
                 </tr>
                 </thead>
                 <tbody>
-                    {props.games.map((game, index) => (
+                {props.games.length > 0 ? (
+                    props.games.map((game, index) => (
                         <tr 
                         key={index} 
                         className={selectedGame === index ? 'table-success' : ''} 
@@ -79,7 +80,12 @@ export function NotJoined(props) {
                         <td>{game.date}</td>
                         <td>{game.time}</td>
                         </tr>
-                    ))}
+                    ))
+                ) : (
+                    <tr>
+                    <td colSpan='4'>Create the first game!</td>
+                    </tr>
+                )}
                 </tbody>
             </table>
         </div>
