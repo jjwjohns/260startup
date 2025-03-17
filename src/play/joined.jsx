@@ -77,7 +77,7 @@ export function Joined(props) {
         setIsWaiting(true);
 
         if (MancalaLogic.checkEndGame(mancalaSlots, 1)) {
-            const { finalSlots, winner } = MancalaLogic.endGame(mancalaSlots);
+            const { slots: finalSlots, winner } = MancalaLogic.endGame(mancalaSlots);
             setMancalaSlots(finalSlots);
             await new Promise(resolve => setTimeout(resolve, 0));
             await delay(1000);
