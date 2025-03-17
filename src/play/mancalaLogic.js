@@ -4,7 +4,7 @@ export class MancalaLogic {
 
       let stones = newSlots[index];
       if (stones === 0) {
-        return {newSlots: slots, goAgain: false};
+        return { newSlots: [...slots], goAgain: false };
       }
       newSlots[index] = 0;
       let i = index + 1;
@@ -12,12 +12,17 @@ export class MancalaLogic {
         if (i === 14) {
           i = 0;
         }
+        if ((player === 1 && i === 0) || (player === 2 && i === 7)) {
+          i++;
+          continue;
+      }
         newSlots[i] = newSlots[i] + 1;
         stones -= 1;
         i++;
       }
+
       i = i - 1;
-      if (player == 1 & i > 0 & i <= 6) {
+      if (player === 1 && i > 0 && i <= 6) {
         if (newSlots[i] === 1) {
           let opposite = 14 - i;
           let stones = newSlots[opposite];
@@ -28,7 +33,7 @@ export class MancalaLogic {
           }
         }
       }
-      if (player == 2 & i > 7 & i <= 13) {
+      if (player === 2 && i > 7 && i <= 13) {
         if (newSlots[i] === 1) {
           let opposite = 14 - i;
           let stones = newSlots[opposite];
@@ -39,23 +44,23 @@ export class MancalaLogic {
           }
         }
       }
-      if (player == 1 & i == 7){
+      if (player === 1 && i === 7){
         return { newSlots: newSlots, goAgain: true };
       }
-      if (player == 2 & i == 0){
+      if (player === 2 && i === 0){
         return { newSlots: newSlots, goAgain: true };
       }
       return { newSlots: newSlots, goAgain: false };
-    }
+  }
 
     static checkEndGame(slots, player) {
-      if (player == 1) {
-        if (slots[1] === 0 & slots[2] === 0 & slots[3] === 0 & slots[4] === 0 & slots[5] === 0 & slots[6] === 0) {
+      if (player === 1) {
+        if (slots[1] === 0 && slots[2] === 0 && slots[3] === 0 && slots[4] === 0 && slots[5] === 0 && slots[6] === 0) {
           return true;
         }
       }
-      if (player == 2) {
-        if (slots[8] === 0 & slots[9] === 0 & slots[10] === 0 & slots[11] === 0 & slots[12] === 0 & slots[13] === 0) {
+      if (player === 2) {
+        if (slots[8] === 0 && slots[9] === 0 && slots[10] === 0 && slots[11] === 0 && slots[12] === 0 && slots[13] === 0) {
           return true;
         }
       }
@@ -65,15 +70,25 @@ export class MancalaLogic {
     static endGame(slots) {
       slots[7] = slots[1] + slots[2] + slots[3] + slots[4] + slots[5] + slots[6];
       slots[0] = slots[8] + slots[9] + slots[10] + slots[11] + slots[12] + slots[13];
+      slots[1] = 0;
+      slots[2] = 0;
+      slots[3] = 0;
+      slots[4] = 0;
+      slots[5] = 0;
+      slots[6] = 0;
+      slots[8] = 0;
+      slots[9] = 0;
+      slots[10] = 0;
+      slots[11] = 0;
+      slots[12] = 0;
+      slots[13] = 0;
       if (slots[7] > slots[0]) {
         return {slots: slots, winner: 1};
       }
-      if (slots[0] > slots[7]) {
-        return {slots: slots, winner: 1};
+      else if (slots[0] > slots[7]) {
+        return {slots: slots, winner: 2};
       }
-      if (slots[0] === slots[7]) {
-        return {slots: slots, winner: 1};
-      }
+      return {slots: slots, winner: 0};
     }
 }
 
