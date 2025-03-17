@@ -47,6 +47,34 @@ export class MancalaLogic {
       }
       return { newSlots: newSlots, goAgain: false };
     }
+
+    static checkEndGame(slots, player) {
+      if (player == 1) {
+        if (slots[1] === 0 & slots[2] === 0 & slots[3] === 0 & slots[4] === 0 & slots[5] === 0 & slots[6] === 0) {
+          return true;
+        }
+      }
+      if (player == 2) {
+        if (slots[8] === 0 & slots[9] === 0 & slots[10] === 0 & slots[11] === 0 & slots[12] === 0 & slots[13] === 0) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    static endGame(slots) {
+      slots[7] = slots[1] + slots[2] + slots[3] + slots[4] + slots[5] + slots[6];
+      slots[0] = slots[8] + slots[9] + slots[10] + slots[11] + slots[12] + slots[13];
+      if (slots[7] > slots[0]) {
+        return {slots: slots, winner: 1};
+      }
+      if (slots[0] > slots[7]) {
+        return {slots: slots, winner: 1};
+      }
+      if (slots[0] === slots[7]) {
+        return {slots: slots, winner: 1};
+      }
+    }
 }
 
 
