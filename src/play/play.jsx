@@ -3,11 +3,17 @@ import './play.css';
 
 import { Joined } from './joined';
 import { NotJoined } from './notjoined';
-// import { PlayerState } from './playerstate';
 
 export function Play({userName}) {
-  // const [playerState, setPlayerState] = useState(localStorage.getItem('currentGame') || '');
   const [currentGame, setCurrentGame] = useState(localStorage.getItem('currentGame') || '');
+  const [games, setGames] = React.useState([]);
+  
+    React.useEffect(() => {
+        const gamesText = localStorage.getItem('games');
+        if (gamesText) {
+          setGames(JSON.parse(gamesText));
+        }
+    }, []);
   
   return (
     <main id="pmain" className="container-fluid text-center">
@@ -18,15 +24,17 @@ export function Play({userName}) {
         userName={userName}
         currentGame={currentGame}
         setCurrentGame={setCurrentGame}
-        // setPlayerState={setPlayerState}
+        games={games}
+        setGames={setGames}
         />
       )}
 
       {currentGame === '' && (
         <NotJoined userName={userName} 
         currentGame={currentGame}
-        // setPlayerState={setPlayerState}
         setCurrentGame={setCurrentGame}
+        games={games}
+        setGames={setGames}
         />
       )}
     </main>

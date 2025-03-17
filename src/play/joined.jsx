@@ -1,16 +1,24 @@
 import React from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import { PlayerState } from './playerstate';
 
 import Button from 'react-bootstrap/Button';
 import './play.css';
 
 export function Joined(props) {
-    // const navigate = useNavigate();
 
     function onPressedQuit() {
+        let index = parseInt(localStorage.getItem('currentGame'));
+
+        let games = [];
+        const gamesText = localStorage.getItem('games');
+        if (gamesText) {
+            games = JSON.parse(gamesText);
+        }
+        let newGames = [...games.slice(0, index), ...games.slice(index + 1)];
+        localStorage.setItem('games', JSON.stringify(newGames));
+        props.setGames(newGames);
         props.setCurrentGame('');
         localStorage.removeItem('currentGame');
+
     }
 
     return (

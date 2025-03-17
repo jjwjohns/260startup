@@ -1,21 +1,10 @@
 import React, {useState, useEffect} from 'react';
-// import { useNavigate } from 'react-router-dom';
-import { PlayerState } from './playerstate';
 
 import Button from 'react-bootstrap/Button';
 import "./play.css";
 
 export function NotJoined(props) {
-    const [games, setGames] = React.useState([]);
     const [selectedGame, setSelectedGame] = useState(null);
-    // const navigate = useNavigate();
-
-    React.useEffect(() => {
-        const gamesText = localStorage.getItem('games');
-        if (gamesText) {
-          setGames(JSON.parse(gamesText));
-        }
-    }, []);
 
     async function onPressedCreate() {
         const now = new Date();
@@ -30,12 +19,11 @@ export function NotJoined(props) {
         }
         games.push(newGame);
         localStorage.setItem('games', JSON.stringify(games));
-        setGames(games);
+        props.setGames(games);
     }
 
     async function onPressedJoin() {
         if (selectedGame !== null) {
-        // props.setPlayerState(PlayerState.Joined);
         localStorage.setItem('currentGame', selectedGame);
         props.setCurrentGame(selectedGame);
         }
@@ -46,8 +34,8 @@ export function NotJoined(props) {
     }
 
     const gameRows = [];
-    if (games.length) {
-    for (const [i, game] of games.entries()) {
+    if (props.games.length) {
+    for (const [i, game] of props.games.entries()) {
         gameRows.push(
         <tr key={i}>
             <td>{i+1}</td>
@@ -79,7 +67,7 @@ export function NotJoined(props) {
                 </tr>
                 </thead>
                 <tbody>
-                    {games.map((game, index) => (
+                    {props.games.map((game, index) => (
                         <tr 
                         key={index} 
                         className={selectedGame === index ? 'table-success' : ''} 
