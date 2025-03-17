@@ -1,6 +1,5 @@
 export class Mancala {
-    constructor(name, slots) {
-      this.name = name;
+    constructor(slots) {
       if (slots) {
         this.slots = slots;
       }
@@ -21,7 +20,7 @@ export class Mancala {
         this.slots[index] = value;
     }
 
-    makeMove(index) {
+    makeMove(player, index) {
       if (index <= 0 || index > 6) {
         return;
       }
@@ -40,18 +39,32 @@ export class Mancala {
         i++;
       }
       i = i - 1;
-      if (i > 0 || i <= 5) {
+      if (player == 1 & i > 0 || i <= 6) {
         if (this.getSlot(i) === 1) {
           let opposite = 14 - i;
           let stones = this.getSlot(opposite);
           if (stones > 0) {
             this.setSlot(i, 0);
             this.setSlot(opposite, 0);
-            this.setSlot(7, this.getSlot(6) + stones + 1);
+            this.setSlot(7, this.getSlot(opposite) + stones + 1);
           }
         }
       }
-      if (i === 7){
+      if (player == 2 & i > 7 || i <= 13) {
+        if (this.getSlot(i) === 1) {
+          let opposite = 14 - i;
+          let stones = this.getSlot(opposite);
+          if (stones > 0) {
+            this.setSlot(i, 0);
+            this.setSlot(opposite, 0);
+            this.setSlot(0, this.getSlot(opposite) + stones + 1);
+          }
+        }
+      }
+      if (player == 1 & i == 7){
+        return { newSlots: this.slots, goAgain: true };
+      }
+      if (player == 2 & i == 0){
         return { newSlots: this.slots, goAgain: true };
       }
       return { newSlots: this.slots, goAgain: false };

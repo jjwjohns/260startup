@@ -33,9 +33,11 @@ export function Joined(props) {
         props.setGames(newGames);
         props.setCurrentGame('');
         localStorage.removeItem('currentGame');
+        localStorage.removeItem('mancalaSlots');
     }
 
     function onPressedPit(pitIndex) {
+        console.log("Pit index: " + pitIndex);
     }
 
     return (
@@ -52,7 +54,7 @@ export function Joined(props) {
                         <div className="pit">{mancalaSlots[8]}</div>
                     </div>
                     <div className="row bottom-row">
-                        <div className="pit">{mancalaSlots[1]}</div>
+                        <div className="pit" onClick={() => onPressedPit(1)}>{mancalaSlots[1]}</div>
                         <div className="pit">{mancalaSlots[2]}</div>
                         <div className="pit">{mancalaSlots[3]}</div>
                         <div className="pit">{mancalaSlots[4]}</div>

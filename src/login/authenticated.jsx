@@ -9,6 +9,8 @@ export function Authenticated(props) {
 
   function logout() {
     localStorage.removeItem('userName');
+    localStorage.removeItem('currentGame');
+    localStorage.removeItem('mancalaSlots');
     props.onLogout();
   }
 

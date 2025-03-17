@@ -66,6 +66,10 @@ h1 {
     margin-top: 10px;
 }
 
+.bottom-row div {
+    cursor: pointer;
+}
+
 
 /* #pheader {
     display: flex;
