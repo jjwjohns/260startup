@@ -1,9 +1,19 @@
 import React from 'react';
+import { Mancala } from './mancala';
 
 import Button from 'react-bootstrap/Button';
 import './play.css';
 
 export function Joined(props) {
+    const [mancalaSlots, setMancalaSlots] = React.useState(localStorage.getItem('mancalaSlots') || [0,4,4,4,4,4,4,0,4,4,4,4,4,4]);
+    
+
+    React.useEffect(() => {
+            const mancalaArray = localStorage.getItem('mancalaSlots');
+            if (mancalaArray) {
+              setMancalaSlots(JSON.parse(mancalaArray));
+            }
+        }, []);
 
     function onPressedQuit() {
         let index = parseInt(localStorage.getItem('currentGame'));
@@ -18,7 +28,6 @@ export function Joined(props) {
         props.setGames(newGames);
         props.setCurrentGame('');
         localStorage.removeItem('currentGame');
-
     }
 
     return (

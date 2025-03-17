@@ -15,6 +15,7 @@ export function Play({userName}) {
         }
     }, []);
   
+
   return (
     <main id="pmain" className="container-fluid text-center">
       <p id ="usernameTag">Logged in as <span style={{ color: "blue" }}>{userName}</span></p>

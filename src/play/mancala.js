@@ -1,7 +1,12 @@
-export class mancalaSlots {
-    constructor(name) {
+export class Mancala {
+    constructor(name, slots) {
       this.name = name;
-      this.slots = [0,4,4,4,4,4,4,0,4,4,4,4,4,4];
+      if (slots) {
+        this.slots = slots;
+      }
+      else {
+        this.slots = [0,4,4,4,4,4,4,0,4,4,4,4,4,4];
+      }
     }
 
     getSlots() {
@@ -42,10 +47,13 @@ export class mancalaSlots {
           if (stones > 0) {
             this.setSlot(i, 0);
             this.setSlot(opposite, 0);
-            this.setSlot(6, this.getSlot(6) + stones + 1);
+            this.setSlot(7, this.getSlot(6) + stones + 1);
           }
         }
       }
-      return i;
+      if (i === 7){
+        return { newSlots: this.slots, goAgain: true };
+      }
+      return { newSlots: this.slots, goAgain: false };
     }
   }
