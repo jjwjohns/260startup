@@ -1,5 +1,5 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+// import { useNavigate } from 'react-router-dom';
 import { PlayerState } from './playerstate';
 
 import Button from 'react-bootstrap/Button';
@@ -7,7 +7,8 @@ import "./play.css";
 
 export function NotJoined(props) {
     const [games, setGames] = React.useState([]);
-    const navigate = useNavigate();
+    const [selectedGame, setSelectedGame] = useState(null);
+    // const navigate = useNavigate();
 
     React.useEffect(() => {
         const gamesText = localStorage.getItem('games');
@@ -33,8 +34,15 @@ export function NotJoined(props) {
     }
 
     async function onPressedJoin() {
-        props.setPlayerState(PlayerState.Joined);
-        navigate('/play');
+        if (selectedGame !== null) {
+        // props.setPlayerState(PlayerState.Joined);
+        localStorage.setItem('currentGame', selectedGame);
+        props.setCurrentGame(selectedGame);
+        }
+    }
+
+    function handleRowClick(index) {
+        setSelectedGame(index);
     }
 
     const gameRows = [];
@@ -59,7 +67,7 @@ export function NotJoined(props) {
 
   return (
     <div id = "notjoined">
-        <h1>Available Games</h1>
+        <h1>Select a Game to Join</h1>
         <div className="table-responsive justify-content-center">
             <table className="table table-bordered table-hover table-striped mx-auto">
                 <thead className="table-primary text-center">
@@ -70,7 +78,21 @@ export function NotJoined(props) {
                     <th>Time</th>
                 </tr>
                 </thead>
-                <tbody id='scores'>{gameRows}</tbody>
+                <tbody>
+                    {games.map((game, index) => (
+                        <tr 
+                        key={index} 
+                        className={selectedGame === index ? 'table-success' : ''} 
+                        onClick={() => handleRowClick(index)}
+                        style={{ cursor: 'pointer' }}
+                        >
+                        <td>{index + 1}</td>
+                        <td>{game.name}</td>
+                        <td>{game.date}</td>
+                        <td>{game.time}</td>
+                        </tr>
+                    ))}
+                </tbody>
             </table>
         </div>
 

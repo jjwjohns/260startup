@@ -1,17 +1,16 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { PlayerState } from './playerstate';
+// import { useNavigate } from 'react-router-dom';
+// import { PlayerState } from './playerstate';
 
 import Button from 'react-bootstrap/Button';
 import './play.css';
 
 export function Joined(props) {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
-    function onPressedLeave() {
-        props.setPlayerState(PlayerState.NotJoined);
-        navigate('/play');
-        console.log('leave game');
+    function onPressedQuit() {
+        props.setCurrentGame('');
+        localStorage.removeItem('currentGame');
     }
 
     return (
@@ -38,8 +37,8 @@ export function Joined(props) {
                 </div>
                 <div className="store right-store">0</div>
             </div>
-            <Button className="custom-button" variant='secondary' onClick={() => onPressedLeave()}>
-                Leave
+            <Button className="custom-button" variant='secondary' onClick={() => onPressedQuit()}>
+                Quit
             </Button>
         </div>
     );

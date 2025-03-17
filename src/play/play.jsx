@@ -3,27 +3,31 @@ import './play.css';
 
 import { Joined } from './joined';
 import { NotJoined } from './notjoined';
-import { PlayerState } from './playerstate';
+// import { PlayerState } from './playerstate';
 
 export function Play({userName}) {
-  const [playerState, setPlayerState] = useState(PlayerState.NotJoined);
+  // const [playerState, setPlayerState] = useState(localStorage.getItem('currentGame') || '');
+  const [currentGame, setCurrentGame] = useState(localStorage.getItem('currentGame') || '');
   
   return (
     <main id="pmain" className="container-fluid text-center">
       <p id ="usernameTag">Logged in as <span style={{ color: "blue" }}>{userName}</span></p>
       
-      {playerState === PlayerState.Joined && (
+      {currentGame !== '' && (
         <Joined 
         userName={userName}
-        playerState={playerState}
-        setPlayerState={setPlayerState}
+        currentGame={currentGame}
+        setCurrentGame={setCurrentGame}
+        // setPlayerState={setPlayerState}
         />
       )}
 
-      {playerState === PlayerState.NotJoined && (
+      {currentGame === '' && (
         <NotJoined userName={userName} 
-        playerState={playerState}
-        setPlayerState={setPlayerState}/>
+        currentGame={currentGame}
+        // setPlayerState={setPlayerState}
+        setCurrentGame={setCurrentGame}
+        />
       )}
     </main>
   );
