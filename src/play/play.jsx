@@ -13,11 +13,15 @@ export function Play({userName}) {
       <p id ="usernameTag">Logged in as <span style={{ color: "blue" }}>{userName}</span></p>
       
       {playerState === PlayerState.Joined && (
-        <Joined userName={userName}/>
+        <Joined 
+        userName={userName}
+        />
       )}
 
       {playerState === PlayerState.NotJoined && (
-        <NotJoined userName={userName}/>
+        <NotJoined userName={userName} 
+        playerState={playerState}
+        setPlayerState={setPlayerState}/>
       )}
     </main>
   );

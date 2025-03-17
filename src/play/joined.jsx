@@ -27,6 +27,9 @@ export function Joined(props) {
             </div>
             <div className="store right-store">0</div>
         </div>
+        <Button className="custom-button" variant='secondary' onClick={() => onPressedCreate()}>
+            Leave Game
+        </Button>
     </div>
   );
 }

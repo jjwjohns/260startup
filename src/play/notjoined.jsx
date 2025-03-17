@@ -1,10 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { PlayerState } from './playerstate';
 
 import Button from 'react-bootstrap/Button';
 import "./play.css";
 
-export function NotJoined({userName}) {
+export function NotJoined(props) {
     const [games, setGames] = React.useState([]);
     const navigate = useNavigate();
 
@@ -19,7 +20,7 @@ export function NotJoined({userName}) {
         const now = new Date();
         const date = now.toLocaleDateString();
         const time = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-        const newGame = { name: userName, date: date, time: time };
+        const newGame = { name: props.userName, date: date, time: time };
 
         let games = [];
         const gamesText = localStorage.getItem('games');
@@ -29,7 +30,12 @@ export function NotJoined({userName}) {
         games.push(newGame);
         localStorage.setItem('games', JSON.stringify(games));
         setGames(games);
-      }
+    }
+
+    async function onPressedJoin() {
+        props.setPlayerState(PlayerState.Joined);
+        navigate('/play');
+    }
 
     const gameRows = [];
     if (games.length) {
@@ -69,7 +75,7 @@ export function NotJoined({userName}) {
         </div>
 
       <div className = "p-3">
-        <Button className="custom-button" variant='primary' onClick={() => navigate('/play')}>
+        <Button className="custom-button" variant='primary' onClick={() => onPressedJoin()}>
             Join
         </Button>
         <Button className="custom-button" variant='secondary' onClick={() => onPressedCreate()}>
