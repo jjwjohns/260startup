@@ -1,5 +1,6 @@
 import React from 'react';
 import { MancalaLogic } from './mancalaLogic';
+import { delay } from './delay';
 
 import Button from 'react-bootstrap/Button';
 import './play.css';
@@ -31,15 +32,45 @@ export function Joined(props) {
         localStorage.removeItem('mancalaSlots');
     }
 
-    async function onPressedPit(pitIndex) {
-        if (isWaiting) {
-            return;
+    async function aiMove() {
+        const randomNumber = Math.floor(Math.random() * (13 - 8 + 1)) + 8;
+        const { newSlots, goAgain } = MancalaLogic.makeMove(mancalaSlots, 2, randomNumber);
+        setMancalaSlots(newSlots);
+        await delay(100);
+
+        while (goAgain) {            
+            await delay(250);
+            const randomNumber = Math.floor(Math.random() * (13 - 8 + 1)) + 8;
+            await aiMove(mancalaSlots, 2, randomNumber);
+            setMancalaSlots(newSlots);
+            await delay(250);
+            if (!goAgain) {
+                return;
+            }
         }
-        setIsWaiting(true);
+
+        await delay(2000);
+        return;
+    }
+
+    async function onPressedPit(pitIndex) {
+        // if (isWaiting) {
+        //     return;
+        // }
+        // setIsWaiting(true);
         const { newSlots, goAgain } = MancalaLogic.makeMove(mancalaSlots, 1, pitIndex);
         setMancalaSlots(newSlots);
-        // await delay(200);
-        setIsWaiting(false);
+
+        // await new Promise(resolve => setTimeout(resolve, 0));
+
+        // if (goAgain) {
+        //     setIsWaiting(false);
+        //     return;
+        // }
+
+        // await aiMove();
+        // setIsWaiting(false);
+        // return;
 
     }
 

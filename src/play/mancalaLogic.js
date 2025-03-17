@@ -1,9 +1,7 @@
 export class MancalaLogic {
   static makeMove(slots, player, index) {
-      const newSlots = [...slots]; // Copy to avoid mutation
-      if (index <= 0 || index > 6) {
-        return;
-      }
+      const newSlots = [...slots];
+
       let stones = newSlots[index];
       if (stones === 0) {
         return;
@@ -26,7 +24,7 @@ export class MancalaLogic {
           if (stones > 0) {
             newSlots[i] = 0;
             newSlots[opposite] = 0;
-            newSlots[7] = newSlots[opposite] + stones + 1;
+            newSlots[7] = newSlots[7] + stones + 1;
           }
         }
       }
@@ -37,7 +35,7 @@ export class MancalaLogic {
           if (stones > 0) {
             newSlots[i] = 0;
             newSlots[opposite] = 0;
-            newSlots[0] = newSlots[opposite] + stones + 1;
+            newSlots[0] = newSlots[0] + stones + 1;
           }
         }
       }
