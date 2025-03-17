@@ -15,6 +15,8 @@ export function Play({userName}) {
       {playerState === PlayerState.Joined && (
         <Joined 
         userName={userName}
+        playerState={playerState}
+        setPlayerState={setPlayerState}
         />
       )}
 
