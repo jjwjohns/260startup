@@ -32,25 +32,32 @@ export function Joined(props) {
         localStorage.removeItem('mancalaSlots');
     }
 
-    async function aiMove() {
-        const randomNumber = Math.floor(Math.random() * (13 - 8 + 1)) + 8;
-        const { newSlots, goAgain } = MancalaLogic.makeMove(mancalaSlots, 2, randomNumber);
-        setMancalaSlots(newSlots);
-        await delay(100);
-
-        while (goAgain) {            
-            await delay(250);
-            const randomNumber = Math.floor(Math.random() * (13 - 8 + 1)) + 8;
-            await aiMove(mancalaSlots, 2, randomNumber);
-            setMancalaSlots(newSlots);
-            await delay(250);
-            if (!goAgain) {
-                return;
-            }
-        }
-
+    async function aiMove(oldSlots) {
         await delay(2000);
-        return;
+        let randomNumber = Math.floor(Math.random() * (13 - 8 + 1)) + 8;
+        while (oldSlots[randomNumber] == 0){
+            randomNumber = Math.floor(Math.random() * (13 - 8 + 1)) + 8;
+        }
+        console.log("randomnumber:", randomNumber);
+        
+        let { newSlots, goAgain } = MancalaLogic.makeMove(oldSlots, 2, randomNumber);
+        while (newSlots == oldSlots){
+            let randomNumber = Math.floor(Math.random() * (13 - 8 + 1)) + 8;
+            console.log("randomnumber again:", randomNumber);
+            while (oldSlots[randomNumber] == 0){
+                randomNumber = Math.floor(Math.random() * (13 - 8 + 1)) + 8;
+                console.log("randomnumber again again:", randomNumber);
+            }
+
+            ({ newSlots, goAgain } = MancalaLogic.makeMove(oldSlots, 2, randomNumber));
+        }
+        
+        setMancalaSlots(newSlots);
+        await new Promise(resolve => setTimeout(resolve, 0));
+
+        if (goAgain) {
+            await aiMove(newSlots);
+        }
     }
 
     async function onPressedPit(pitIndex) {
@@ -59,19 +66,19 @@ export function Joined(props) {
         }
         setIsWaiting(true);
         const { newSlots, goAgain } = MancalaLogic.makeMove(mancalaSlots, 1, pitIndex);
-        setMancalaSlots(newSlots);
+        
+        await new Promise(resolve => {
+            setMancalaSlots(newSlots);
+            setTimeout(resolve, 500);
+        });
 
-        await new Promise(resolve => setTimeout(resolve, 0));
+        if (goAgain) {
+            setIsWaiting(false);
+            return;
+        }
 
-        // if (goAgain) {
-        //     setIsWaiting(false);
-        //     return;
-        // }
-
-        // await aiMove();
+        await aiMove(newSlots);
         setIsWaiting(false);
-        // return;
-
     }
 
     return (
