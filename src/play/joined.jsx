@@ -1,24 +1,19 @@
 import React from 'react';
-import { Mancala } from './mancala';
+import { MancalaLogic } from './mancalaLogic';
 
 import Button from 'react-bootstrap/Button';
 import './play.css';
 
 export function Joined(props) {
-    const [mancalaSlots, setMancalaSlots] = React.useState(localStorage.getItem('mancalaSlots') || [0,4,4,4,4,4,4,0,4,4,4,4,4,4]);
-
-
-    React.useEffect(() => {
-            const mancalaArray = localStorage.getItem('mancalaSlots');
-            if (mancalaArray) {
-              setMancalaSlots(JSON.parse(mancalaArray));
-            }
-        }, []);
+    const [isWaiting, setIsWaiting] = React.useState(false); 
+    const [mancalaSlots, setMancalaSlots] = React.useState(() => {
+        const storedSlots = localStorage.getItem('mancalaSlots');
+        return storedSlots ? JSON.parse(storedSlots) : [0,4,4,4,4,4,4,0,4,4,4,4,4,4];
+    });
 
     React.useEffect(() => {
-          localStorage.setItem('mancalaSlots', JSON.stringify(mancalaSlots));
-        }, [mancalaSlots]);
-
+        localStorage.setItem('mancalaSlots', JSON.stringify(mancalaSlots));
+    }, [mancalaSlots]);
 
     function onPressedQuit() {
         let index = parseInt(localStorage.getItem('currentGame'));
@@ -36,8 +31,16 @@ export function Joined(props) {
         localStorage.removeItem('mancalaSlots');
     }
 
-    function onPressedPit(pitIndex) {
-        console.log("Pit index: " + pitIndex);
+    async function onPressedPit(pitIndex) {
+        if (isWaiting) {
+            return;
+        }
+        setIsWaiting(true);
+        const { newSlots, goAgain } = MancalaLogic.makeMove(mancalaSlots, 1, pitIndex);
+        setMancalaSlots(newSlots);
+        // await delay(200);
+        setIsWaiting(false);
+
     }
 
     return (
@@ -55,11 +58,11 @@ export function Joined(props) {
                     </div>
                     <div className="row bottom-row">
                         <div className="pit" onClick={() => onPressedPit(1)}>{mancalaSlots[1]}</div>
-                        <div className="pit">{mancalaSlots[2]}</div>
-                        <div className="pit">{mancalaSlots[3]}</div>
-                        <div className="pit">{mancalaSlots[4]}</div>
-                        <div className="pit">{mancalaSlots[5]}</div>
-                        <div className="pit">{mancalaSlots[6]}</div>
+                        <div className="pit" onClick={() => onPressedPit(2)}>{mancalaSlots[2]}</div>
+                        <div className="pit" onClick={() => onPressedPit(3)}>{mancalaSlots[3]}</div>
+                        <div className="pit" onClick={() => onPressedPit(4)}>{mancalaSlots[4]}</div>
+                        <div className="pit" onClick={() => onPressedPit(5)}>{mancalaSlots[5]}</div>
+                        <div className="pit" onClick={() => onPressedPit(6)}>{mancalaSlots[6]}</div>
                     </div>
                 </div>
                 <div className="store right-store">{mancalaSlots[7]}</div>
