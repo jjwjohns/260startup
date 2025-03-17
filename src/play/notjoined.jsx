@@ -5,7 +5,35 @@ import Button from 'react-bootstrap/Button';
 import "./play.css";
 
 export function NotJoined(props) {
-  const navigate = useNavigate();
+    const [games, setGames] = React.useState([]);
+    const navigate = useNavigate();
+
+    React.useEffect(() => {
+        const gamesText = localStorage.getItem('games');
+        if (gamesText) {
+          setGames(JSON.parse(gamesText));
+        }
+    }, []);
+
+    const gameRows = [];
+    if (games.length) {
+    for (const [i, game] of games.entries()) {
+        gameRows.push(
+        <tr key={i}>
+            <td>{i}</td>
+            <td>{score.player}</td>
+            <td>{score.date}</td>
+            <td>{score.time}</td>
+        </tr>
+        );
+    }
+    } else {
+    gameRows.push(
+        <tr key='0'>
+        <td colSpan='4'>Create the first game!</td>
+        </tr>
+    );
+    }
 
   return (
     <div id = "notjoined">
@@ -20,14 +48,7 @@ export function NotJoined(props) {
                     <th>Time</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td>game1</td>
-                    <td>John</td>
-                    <td>Friday the 13th</td>
-                    <td>13:00</td>
-                </tr>
-                </tbody>
+                <tbody id='scores'>{gameRows}</tbody>
             </table>
         </div>
 
