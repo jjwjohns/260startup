@@ -6,18 +6,6 @@ h1 {
     padding: 12px;
 }
 
-/* .mancala-board {
-    display: flex;
-    align-items: center;
-    background: #8B5A2B;
-    border-radius: 20px;
-    padding: 20px;
-    width: 800px;
-    height: 350px;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
-    margin-bottom: 20px;
-} */
-
 .mancala-board {
     display: flex;
     align-items: center;
@@ -79,7 +67,7 @@ h1 {
 }
 
 
-#pheader {
+/* #pheader {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -96,10 +84,38 @@ h1 {
 
 #pheader h2 {
     text-align: center;
+} */
+
+.table {
+    align-items: center;
+    justify-content: center;   
+}
+
+#usernameTag {
+    position: absolute;
+    top: 80px;
+    left: 30px;
+    margin: 0;
+    padding: 5px 10px;
+    font-size: 16px;
 }
 
 #custom-button {
     margin: 10px;
     height: 40px;
     width: 80px;
+}
+
+
+#notjoined {
+    width: 80%;
+    height: 100%;
+    min-width: 400px;
+    min-height: 100px;
+}
+
+#joined {
+    width: 80%;
+    height: 100%;
+    justify-content: center;
 }

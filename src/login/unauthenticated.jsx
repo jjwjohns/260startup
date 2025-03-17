@@ -2,6 +2,8 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import { MessageDialog } from './messagedialogue';
 
+import './authenticated.css';
+
 export function Unauthenticated(props) {
     const [userName, setUserName] = React.useState(props.userName);
     const [password, setPassword] = React.useState('');
@@ -31,10 +33,10 @@ export function Unauthenticated(props) {
                 </div>
             </form>
 
-            <Button variant='primary' onClick={() => loginUser()} disabled={!userName || !password}>
+            <Button className="custom-button" variant='primary' onClick={() => loginUser()} disabled={!userName || !password}>
                 Login
             </Button>
-            <Button variant='secondary' onClick={() => createUser()} disabled={!userName || !password}>
+            <Button className="custom-button" variant='secondary' onClick={() => createUser()} disabled={!userName || !password}>
                 Create
             </Button>
 

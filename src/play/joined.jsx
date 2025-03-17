@@ -4,10 +4,7 @@ import './play.css';
 export function Joined(props) {
 
   return (
-    <div>
-        <div id = "pheader">
-            <p>Logged in as <span style={{ color: "blue" }}>{props.userName}</span></p>
-        </div>
+    <div id ="joined" className = "d-flex justify-content-center">
         <div className="mancala-board">
             <div className="store left-store">0</div>
             <div className="pits-container">

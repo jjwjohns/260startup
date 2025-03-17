@@ -8,13 +8,10 @@ export function NotJoined(props) {
   const navigate = useNavigate();
 
   return (
-    <div>
-        <div id = "pheader">
-            <p>Logged in as <span style={{ color: "blue" }}>{props.userName}</span></p>
-            <h1>Available Games</h1>
-        </div>
-        <div className="table-responsive w-75">
-            <table className="table table-bordered table-hover table-striped">
+    <div id = "notjoined">
+        <h1>Available Games</h1>
+        <div className="table-responsive justify-content-center">
+            <table className="table table-bordered table-hover table-striped mx-auto">
                 <thead className="table-primary text-center">
                 <tr>
                     <th>Game</th>

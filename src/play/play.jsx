@@ -6,19 +6,19 @@ import { NotJoined } from './notjoined';
 import { PlayerState } from './playerstate';
 
 export function Play({userName}) {
-  const currentPlayerState = PlayerState.NotJoined;
-  const [playerState, setPlayerState] = useState(currentPlayerState);
+  const [playerState, setPlayerState] = useState(PlayerState.NotJoined);
   
   return (
     <main id="pmain" className="container-fluid text-center">
+      <p id ="usernameTag">Logged in as <span style={{ color: "blue" }}>{userName}</span></p>
       
-        {currentPlayerState === PlayerState.Joined && (
-          <Joined userName={userName}/>
-        )}
+      {playerState === PlayerState.Joined && (
+        <Joined userName={userName}/>
+      )}
 
-        {currentPlayerState === PlayerState.NotJoined && (
-          <NotJoined userName={userName}/>
-        )}
+      {playerState === PlayerState.NotJoined && (
+        <NotJoined userName={userName}/>
+      )}
     </main>
   );
 }
