@@ -54,6 +54,25 @@ export function Joined(props) {
         
         setMancalaSlots(newSlots);
         await new Promise(resolve => setTimeout(resolve, 0));
+        await delay(500);
+
+        if (MancalaLogic.checkEndGame(newSlots, 2)) {
+            ({ newSlots, winner } = MancalaLogic.endGame(newSlots));
+            setMancalaSlots(newSlots);
+            await new Promise(resolve => setTimeout(resolve, 0));
+            await delay(1000);
+            if (winner == 0) {
+                alert("It's a tie!");
+            }
+            else if (winner == 2) {
+                alert("AI wins!");
+            }
+            else {
+                alert("You win!");
+            }
+            onPressedQuit();
+            return;
+        }
 
         if (goAgain) {
             await aiMove(newSlots);
@@ -67,10 +86,28 @@ export function Joined(props) {
         setIsWaiting(true);
         const { newSlots, goAgain } = MancalaLogic.makeMove(mancalaSlots, 1, pitIndex);
         
-        await new Promise(resolve => {
+        setMancalaSlots(newSlots);
+        await new Promise(resolve => setTimeout(resolve, 0));
+        await delay(500);
+
+        if (MancalaLogic.checkEndGame(newSlots, 1)) {
+            ({ newSlots, winner } = MancalaLogic.endGame(newSlots));
             setMancalaSlots(newSlots);
-            setTimeout(resolve, 500);
-        });
+            await new Promise(resolve => setTimeout(resolve, 0));
+            await delay(1000);
+            
+            if (winner == 0) {
+                alert("It's a tie!");
+            }
+            else if (winner == 2) {
+                alert("AI wins!");
+            }
+            else {
+                alert("You win!");
+            }
+            onPressedQuit();
+            return;
+        }
 
         if (goAgain) {
             setIsWaiting(false);
