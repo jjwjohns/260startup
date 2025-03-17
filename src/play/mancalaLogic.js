@@ -4,7 +4,7 @@ export class MancalaLogic {
 
       let stones = newSlots[index];
       if (stones === 0) {
-        return;
+        return {newSlots: slots, goAgain: false};
       }
       newSlots[index] = 0;
       let i = index + 1;

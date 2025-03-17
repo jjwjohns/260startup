@@ -54,14 +54,14 @@ export function Joined(props) {
     }
 
     async function onPressedPit(pitIndex) {
-        // if (isWaiting) {
-        //     return;
-        // }
-        // setIsWaiting(true);
+        if (isWaiting) {
+            return;
+        }
+        setIsWaiting(true);
         const { newSlots, goAgain } = MancalaLogic.makeMove(mancalaSlots, 1, pitIndex);
         setMancalaSlots(newSlots);
 
-        // await new Promise(resolve => setTimeout(resolve, 0));
+        await new Promise(resolve => setTimeout(resolve, 0));
 
         // if (goAgain) {
         //     setIsWaiting(false);
@@ -69,7 +69,7 @@ export function Joined(props) {
         // }
 
         // await aiMove();
-        // setIsWaiting(false);
+        setIsWaiting(false);
         // return;
 
     }
