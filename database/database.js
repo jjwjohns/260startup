@@ -43,7 +43,18 @@ function getUser(email) {
   async function getGame(id) {
     return gamesCollection.findOne({ id: id });
   }
-  
+
   async function deleteGame(id) {
     return gamesCollection.deleteOne({ id: id });
   }
+
+  module.exports = {
+    getUser,
+    getUserByToken,
+    addUser,
+    updateUser,
+    addGame,
+    getGame,
+    getGames,
+    deleteGame,
+  };
