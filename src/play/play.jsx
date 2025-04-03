@@ -20,6 +20,7 @@ export function Play({userName}) {
         .then((response) => response.json())
         .then((games) => {
           setGames(games);
+          localStorage.setItem('games', JSON.stringify(games));
         });
     }, []);
   
