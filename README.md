@@ -87,11 +87,11 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
-- [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
-- [ ] **Calls to third party endpoints** - I did not complete this part of the deliverable.
-- [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
+- [X] **Node.js/Express HTTP service** - I fully implemented a node.js/express http service. My front end is served up through express and calls backend service api endpoints to implement the functionality of the application.
+- [X] **Static middleware for frontend** - I used express to serve up the files in the public folder.
+- [X] **Calls to third party endpoints** - I implemented a quote service that generates quotes on my about page.
+- [X] **Backend service endpoints** - I implemented the following backend service endpoints: createAuth(/auth/create)(post), GetAuth(/auth/login)(get), DeleteAuth(/auth/logout)(delete), GetGames (/game/:id)(get), JoinGame(/game/:id/join)(post), DeleteGame(/game/:id)(delete), and createGame(/game)(post).
+- [X] **Frontend calls service endpoints** - I called the following endpoints from my frontend: CreateAuth, GetAuth, DeleteAuth, DeleteGame, CreateGame. My frontend now stores in local storage and send data to store in the backend service.
 
 ## 🚀 DB/Login deliverable
 
