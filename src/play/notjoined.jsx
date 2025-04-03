@@ -6,20 +6,23 @@ import "./play.css";
 export function NotJoined(props) {
     const [selectedGame, setSelectedGame] = useState(null);
 
+    async function createGame(newGame) {
+        console.log('Creating game:', newGame);
+        await fetch('/api/game', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(newGame),
+        });
+      }
+
     async function onPressedCreate() {
         const now = new Date();
         const date = now.toLocaleDateString();
         const time = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
         const newGame = { name: props.userName, date: date, time: time };
-
-        let games = [];
-        const gamesText = localStorage.getItem('games');
-        if (gamesText) {
-            games = JSON.parse(gamesText);
-        }
-        games.push(newGame);
-        localStorage.setItem('games', JSON.stringify(games));
-        props.setGames(games);
+        // localStorage.setItem('currentGame', games.length - 1);
+        // props.setCurrentGame(games.length - 1);
+        createGame(newGame);
     }
 
     async function onPressedJoin() {
@@ -101,6 +104,3 @@ export function NotJoined(props) {
     </div>
   );
 }
-
-
-
