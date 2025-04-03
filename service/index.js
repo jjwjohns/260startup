@@ -77,6 +77,27 @@ apiRouter.get('/games', verifyAuth, (_req, res) => {
   res.send(games);
 });
 
+// GetGame
+apiRouter.get('/game/:id', verifyAuth, (req, res) => {
+  const game = games.find((g) => g.id === req.params.id);
+  if (game) {
+    res.send(game);
+  } else {
+    res.status(404).send({ msg: 'Game not found' });
+  }
+});
+
+// Join a game
+apiRouter.post('/game/:id/join', verifyAuth, (req, res) => {
+  const game = games.find((g) => g.id === req.params.id);
+  if (game) {
+    game.players.push(req.body);
+    res.send(game);
+  } else {
+    res.status(404).send({ msg: 'Game not found' });
+  }
+});
+
 // Create a new game
 apiRouter.post('/game', verifyAuth, (req, res) => {
   games.push(req.body);
