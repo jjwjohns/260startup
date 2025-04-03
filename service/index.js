@@ -87,7 +87,7 @@ apiRouter.get('/game/:id', verifyAuth, (req, res) => {
   }
 });
 
-// Join a game, This is kind of a mock function currently. Won't do much until websocket and databse is implemented
+// Join a game, Not at full functionality yet, needs database and websocket.
 apiRouter.post('/game/:id/join', verifyAuth, (req, res) => {
   const game = games.find((g) => g.id === req.params.id);
   if (game) {
@@ -97,6 +97,18 @@ apiRouter.post('/game/:id/join', verifyAuth, (req, res) => {
     res.status(404).send({ msg: 'Game not found' });
   }
 });
+
+// Delete a game, Not at full functionality yet, needs database and websocket.
+apiRouter.delete('/game/:id', verifyAuth, (req, res) => {
+  const gameIndex = games.findIndex((g) => g.id === req.params.id);
+  if (gameIndex !== -1) {
+    games.splice(gameIndex, 1);
+    res.status(204).end();
+  } else {
+    res.status(404).send({ msg: 'Game not found' });
+  }
+});
+
 
 // Create a new game
 apiRouter.post('/game', verifyAuth, (req, res) => {
