@@ -3,7 +3,6 @@ import React, {useState, useEffect} from 'react';
 import Button from 'react-bootstrap/Button';
 import "./play.css";
 
-var gameCounter = 0;
 
 export function NotJoined(props) {
     const [selectedGame, setSelectedGame] = useState(null);
@@ -19,7 +18,7 @@ export function NotJoined(props) {
 
     // After websocket and DB are set up you will automatically join the game
     async function onPressedCreate() {
-        const id = gameCounter;
+        const id = Math.floor(Date.now() * Math.random());
         const now = new Date();
         const date = now.toLocaleDateString();
         const time = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
@@ -36,7 +35,6 @@ export function NotJoined(props) {
         // localStorage.setItem('currentGame', games.length - 1);
         // props.setCurrentGame(games.length - 1);
         await createGame(newGame);
-        gameCounter++;
     }
 
     async function onPressedJoin() {
@@ -46,7 +44,7 @@ export function NotJoined(props) {
             if (gamesText) {
                 games = JSON.parse(gamesText);
             }
-            let currentGame = games[selectedGame].id;
+            let currentGame = selectedGame;
             localStorage.setItem('currentGame', currentGame);
             props.setCurrentGame(currentGame);
         }
@@ -93,9 +91,9 @@ export function NotJoined(props) {
                 {props.games.length > 0 ? (
                     props.games.map((game, index) => (
                         <tr 
-                        key={index} 
-                        className={selectedGame === index ? 'table-success' : ''} 
-                        onClick={() => handleRowClick(index)}
+                        key={game.id} 
+                        className={selectedGame === game.id ? 'table-success' : ''} 
+                        onClick={() => handleRowClick(game.id)}
                         style={{ cursor: 'pointer' }}
                         >
                         <td>{index + 1}</td>

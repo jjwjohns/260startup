@@ -39,7 +39,7 @@ export function Joined(props) {
         props.setCurrentGame('');
         localStorage.removeItem('currentGame');
         // localStorage.removeItem('mancalaSlots');
-        quit(index);
+        quit(id);
     }
 
     async function aiMove(oldSlots) {
