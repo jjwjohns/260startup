@@ -73,14 +73,14 @@ const verifyAuth = async (req, res, next) => {
 };
 
 // GetScores
-apiRouter.get('/scores', verifyAuth, (_req, res) => {
-  res.send(scores);
+apiRouter.get('/games', verifyAuth, (_req, res) => {
+  res.send(games);
 });
 
-// SubmitScore
-apiRouter.post('/score', verifyAuth, (req, res) => {
-  scores = updateScores(req.body);
-  res.send(scores);
+// Create a new game
+apiRouter.post('/game', verifyAuth, (req, res) => {
+  games = updateGames(req.body);
+  res.send(games);
 });
 
 // Default error handler
@@ -94,25 +94,12 @@ app.use((_req, res) => {
 });
 
 // updateScores considers a new score for inclusion in the high scores.
-function updateScores(newScore) {
+function updateGames(newGame) {
   let found = false;
-  for (const [i, prevScore] of scores.entries()) {
-    if (newScore.score > prevScore.score) {
-      scores.splice(i, 0, newScore);
-      found = true;
-      break;
-    }
-  }
-
   if (!found) {
-    scores.push(newScore);
+    games.push(newGame);
   }
-
-  if (scores.length > 10) {
-    scores.length = 10;
-  }
-
-  return scores;
+  return games;
 }
 
 async function createUser(email, password) {
