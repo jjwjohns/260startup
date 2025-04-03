@@ -12,9 +12,9 @@ export function Joined(props) {
         return storedSlots ? JSON.parse(storedSlots) : [0,4,4,4,4,4,4,0,4,4,4,4,4,4];
     });
 
-    React.useEffect(() => {
-        localStorage.setItem('mancalaSlots', JSON.stringify(mancalaSlots));
-    }, [mancalaSlots]);
+    // React.useEffect(() => {
+    //     localStorage.setItem('mancalaSlots', JSON.stringify(mancalaSlots));
+    // }, [mancalaSlots]);
 
     function onPressedQuit() {
         let index = parseInt(localStorage.getItem('currentGame'));
@@ -29,7 +29,7 @@ export function Joined(props) {
         props.setGames(newGames);
         props.setCurrentGame('');
         localStorage.removeItem('currentGame');
-        localStorage.removeItem('mancalaSlots');
+        // localStorage.removeItem('mancalaSlots');
     }
 
     async function aiMove(oldSlots) {

@@ -8,11 +8,19 @@ export function Play({userName}) {
   const [currentGame, setCurrentGame] = useState(localStorage.getItem('currentGame') || '');
   const [games, setGames] = React.useState([]);
   
+    // React.useEffect(() => {
+    //     const gamesText = localStorage.getItem('games');
+    //     if (gamesText) {
+    //       setGames(JSON.parse(gamesText));
+    //     }
+    // }, []);
+
     React.useEffect(() => {
-        const gamesText = localStorage.getItem('games');
-        if (gamesText) {
-          setGames(JSON.parse(gamesText));
-        }
+      fetch('/api/games')
+        .then((response) => response.json())
+        .then((games) => {
+          setGames(games);
+        });
     }, []);
   
 
