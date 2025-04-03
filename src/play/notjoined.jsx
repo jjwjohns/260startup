@@ -13,6 +13,7 @@ export function NotJoined(props) {
           headers: { 'content-type': 'application/json' },
           body: JSON.stringify(newGame),
         });
+
       }
 
     async function onPressedCreate() {
@@ -20,9 +21,18 @@ export function NotJoined(props) {
         const date = now.toLocaleDateString();
         const time = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
         const newGame = { name: props.userName, date: date, time: time };
+
+        let games = [];
+        const gamesText = localStorage.getItem('games');
+        if (gamesText) {
+            games = JSON.parse(gamesText);
+        }
+        games.push(newGame);
+        localStorage.setItem('games', JSON.stringify(games));
+        props.setGames(games);
         // localStorage.setItem('currentGame', games.length - 1);
         // props.setCurrentGame(games.length - 1);
-        createGame(newGame);
+        await createGame(newGame);
     }
 
     async function onPressedJoin() {
