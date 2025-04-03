@@ -28,6 +28,7 @@ app.use(`/api`, apiRouter);
 
 // CreateAuth a new user
 apiRouter.post('/auth/create', async (req, res) => {
+    // console.log("Creating user with email: ", req.body.email);
   if (await findUser('email', req.body.email)) {
     res.status(409).send({ msg: 'Existing user' });
   } else {
@@ -100,20 +101,23 @@ apiRouter.post('/game/:id/join', verifyAuth, (req, res) => {
 
 // Delete a game, Not at full functionality yet, needs database and websocket.
 apiRouter.delete('/game/:id', verifyAuth, (req, res) => {
-  const gameIndex = games.findIndex((g) => g.id === req.params.id);
-  if (gameIndex !== -1) {
-    games.splice(gameIndex, 1);
-    res.status(204).end();
-  } else {
-    res.status(404).send({ msg: 'Game not found' });
-  }
+    // console.log("Deleting game with id: ", req.params.id);
+    const gameIndex = games.findIndex((g) => g.id === parseInt(req.params.id));
+    if (gameIndex !== -1) {
+        games.splice(gameIndex, 1);
+        res.status(204).end();
+    } else {
+        res.status(404).send({ msg: 'Game not found' });
+    }
 });
 
 
 // Create a new game
 apiRouter.post('/game', verifyAuth, (req, res) => {
+    // console.log("Creating game with id: ", req.body.id);
   games.push(req.body);
   res.send(games);
+  console.log(games);
 });
 
 // Default error handler

@@ -3,11 +3,12 @@ import React, {useState, useEffect} from 'react';
 import Button from 'react-bootstrap/Button';
 import "./play.css";
 
+var gameCounter = 0;
+
 export function NotJoined(props) {
     const [selectedGame, setSelectedGame] = useState(null);
 
     async function createGame(newGame) {
-        console.log('Creating game:', newGame);
         await fetch('/api/game', {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
@@ -16,11 +17,13 @@ export function NotJoined(props) {
 
       }
 
+    // After websocket and DB are set up you will automatically join the game
     async function onPressedCreate() {
+        const id = gameCounter;
         const now = new Date();
         const date = now.toLocaleDateString();
         const time = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-        const newGame = { name: props.userName, date: date, time: time };
+        const newGame = { id: id, name: props.userName, date: date, time: time };
 
         let games = [];
         const gamesText = localStorage.getItem('games');
@@ -33,12 +36,19 @@ export function NotJoined(props) {
         // localStorage.setItem('currentGame', games.length - 1);
         // props.setCurrentGame(games.length - 1);
         await createGame(newGame);
+        gameCounter++;
     }
 
     async function onPressedJoin() {
         if (selectedGame !== null) {
-        localStorage.setItem('currentGame', selectedGame);
-        props.setCurrentGame(selectedGame);
+            let games = [];
+            const gamesText = localStorage.getItem('games');
+            if (gamesText) {
+                games = JSON.parse(gamesText);
+            }
+            let currentGame = games[selectedGame].id;
+            localStorage.setItem('currentGame', currentGame);
+            props.setCurrentGame(currentGame);
         }
     }
 

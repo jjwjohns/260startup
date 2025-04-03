@@ -16,20 +16,30 @@ export function Joined(props) {
     //     localStorage.setItem('mancalaSlots', JSON.stringify(mancalaSlots));
     // }, [mancalaSlots]);
 
+    async function quit(gameID) {
+        await fetch(`/api/game/${gameID}`, {
+            method: 'DELETE',
+            headers: { 'content-type': 'application/json' },
+        });
+    }
+
     function onPressedQuit() {
-        let index = parseInt(localStorage.getItem('currentGame'));
+        let id = parseInt(localStorage.getItem('currentGame'));
 
         let games = [];
         const gamesText = localStorage.getItem('games');
         if (gamesText) {
             games = JSON.parse(gamesText);
         }
+        const index = games.findIndex((game) => game.id === id);
+
         let newGames = [...games.slice(0, index), ...games.slice(index + 1)];
         localStorage.setItem('games', JSON.stringify(newGames));
         props.setGames(newGames);
         props.setCurrentGame('');
         localStorage.removeItem('currentGame');
         // localStorage.removeItem('mancalaSlots');
+        quit(index);
     }
 
     async function aiMove(oldSlots) {
