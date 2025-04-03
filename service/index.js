@@ -79,7 +79,7 @@ apiRouter.get('/games', verifyAuth, (_req, res) => {
 
 // Create a new game
 apiRouter.post('/game', verifyAuth, (req, res) => {
-  games = updateGames(req.body);
+  games.push(req.body);
   res.send(games);
 });
 
@@ -92,15 +92,6 @@ app.use(function (err, req, res, next) {
 app.use((_req, res) => {
   res.sendFile('index.html', { root: 'public' });
 });
-
-// updateScores considers a new score for inclusion in the high scores.
-function updateGames(newGame) {
-  let found = false;
-  if (!found) {
-    games.push(newGame);
-  }
-  return games;
-}
 
 async function createUser(email, password) {
   const passwordHash = await bcrypt.hash(password, 10);
