@@ -6,7 +6,7 @@ const app = express();
 
 const authCookieName = 'token';
 
-// The scores and users are saved in memory and disappear whenever the service is restarted.
+// The games and users are saved in memory and disappear whenever the service is restarted.
 let users = [];
 let games = [];
 
@@ -72,7 +72,7 @@ const verifyAuth = async (req, res, next) => {
   }
 };
 
-// GetScores
+// GetGames
 apiRouter.get('/games', verifyAuth, (_req, res) => {
   res.send(games);
 });
