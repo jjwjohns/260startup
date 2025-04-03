@@ -87,7 +87,7 @@ apiRouter.get('/game/:id', verifyAuth, (req, res) => {
   }
 });
 
-// Join a game
+// Join a game, This is kind of a mock function currently. Won't do much until websocket and databse is implemented
 apiRouter.post('/game/:id/join', verifyAuth, (req, res) => {
   const game = games.find((g) => g.id === req.params.id);
   if (game) {
