@@ -10,37 +10,52 @@ export function Unauthenticated(props) {
     const [displayError, setDisplayError] = React.useState(null);
 
     async function loginUser() {
-        localStorage.setItem('userName', userName);
-        props.onLogin(userName);
-      }
+        loginOrCreate(`/api/auth/login`);
+    }
     
-      async function createUser() {
-        localStorage.setItem('userName', userName);
-        props.onLogin(userName);
+    async function createUser() {
+        loginOrCreate(`/api/auth/create`);
+    }
+
+    async function loginOrCreate(endpoint) {
+        const response = await fetch(endpoint, {
+          method: 'post',
+          body: JSON.stringify({ email: userName, password: password }),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+        });
+        if (response?.status === 200) {
+          localStorage.setItem('userName', userName);
+          props.onLogin(userName);
+        } else {
+          const body = await response.json();
+          setDisplayError(`⚠ Error: ${body.msg}`);
+        }
       }
 
-      return (
-        <div>
-            <h3>Sign in to play!</h3>
-            <form method="get" action="play.html">
-                <div className="input-group mb-3">
-                <span className="input-group-text">@</span>
-                <input className="form-control" type="text" value={userName} onChange={(e) => setUserName(e.target.value)} placeholder="username@email.com" />
-                </div>
-                <div className="input-group mb-3">
-                <span className="input-group-text">🔒</span>
-                <input className="form-control" type="password" onChange={(e) => setPassword(e.target.value)} placeholder="password" />
-                </div>
-            </form>
+    return (
+    <div>
+        <h3>Sign in to play!</h3>
+        <form method="get" action="play.html">
+            <div className="input-group mb-3">
+            <span className="input-group-text">@</span>
+            <input className="form-control" type="text" value={userName} onChange={(e) => setUserName(e.target.value)} placeholder="username@email.com" />
+            </div>
+            <div className="input-group mb-3">
+            <span className="input-group-text">🔒</span>
+            <input className="form-control" type="password" onChange={(e) => setPassword(e.target.value)} placeholder="password" />
+            </div>
+        </form>
 
-            <Button className="custom-button" variant='primary' onClick={() => loginUser()} disabled={!userName || !password}>
-                Login
-            </Button>
-            <Button className="custom-button" variant='secondary' onClick={() => createUser()} disabled={!userName || !password}>
-                Create
-            </Button>
+        <Button className="custom-button" variant='primary' onClick={() => loginUser()} disabled={!userName || !password}>
+            Login
+        </Button>
+        <Button className="custom-button" variant='secondary' onClick={() => createUser()} disabled={!userName || !password}>
+            Create
+        </Button>
 
-            <MessageDialog message={displayError} onHide={() => setDisplayError(null)} />
-        </div>
-        );
+        <MessageDialog message={displayError} onHide={() => setDisplayError(null)} />
+    </div>
+    );
 }

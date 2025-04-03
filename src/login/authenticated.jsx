@@ -8,10 +8,18 @@ export function Authenticated(props) {
   const navigate = useNavigate();
 
   function logout() {
-    localStorage.removeItem('userName');
-    localStorage.removeItem('currentGame');
-    localStorage.removeItem('mancalaSlots');
-    props.onLogout();
+    fetch(`/api/auth/logout`, {
+      method: 'delete',
+    })
+      .catch(() => {
+        // Logout failed. Assuming offline
+      })
+      .finally(() => {
+        localStorage.removeItem('userName');
+        localStorage.removeItem('currentGame');
+        localStorage.removeItem('mancalaSlots');
+        props.onLogout();
+      });
   }
 
   return (
