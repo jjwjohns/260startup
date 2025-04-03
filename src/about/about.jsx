@@ -7,8 +7,13 @@ export function About(props) {
   const [quoteAuthor, setQuoteAuthor] = React.useState('unknown');
 
   React.useEffect(() => {
-    setQuote('The worse thing I can be is the the same as everybody else, I hate that.');
-    setQuoteAuthor('Arnold Schwarzenegger');
+    fetch('https://quote.cs260.click')
+      .then((response) => response.json())
+      .then((data) => {
+        setQuote(data.quote);
+        setQuoteAuthor(data.author);
+      })
+      .catch();
   }, []);
 
   return (

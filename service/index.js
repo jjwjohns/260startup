@@ -78,7 +78,7 @@ apiRouter.get('/games', verifyAuth, (_req, res) => {
   res.send(games);
 });
 
-// GetGame
+// GetGame (not currently being used)
 apiRouter.get('/game/:id', verifyAuth, (req, res) => {
   const game = games.find((g) => g.id === req.params.id);
   if (game) {
@@ -88,7 +88,7 @@ apiRouter.get('/game/:id', verifyAuth, (req, res) => {
   }
 });
 
-// Join a game, Not at full functionality yet, needs database and websocket.
+// Join a game, Not at full functionality yet, needs database and websocket. (Not currently being used)
 apiRouter.post('/game/:id/join', verifyAuth, (req, res) => {
   const game = games.find((g) => g.id === req.params.id);
   if (game) {
