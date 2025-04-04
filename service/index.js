@@ -45,10 +45,14 @@ apiRouter.post('/auth/login', async (req, res) => {
   if (user) {
     if (await bcrypt.compare(req.body.password, user.password)) {
       user.token = uuid.v4();
+      await DB.updateUser(user);
       setAuthCookie(res, user.token);
       res.send({ email: user.email });
       return;
     }
+  }
+  else {
+    console.log("User not found");
   }
   res.status(401).send({ msg: 'Unauthorized' });
 });
@@ -122,9 +126,9 @@ apiRouter.get('/game/:id', verifyAuth, (req, res) => {
 // });
 
 // Delete a game, Not at full functionality yet, needs database and websocket.
-// Delete a game, Not at full functionality yet, needs database and websocket.
 apiRouter.delete('/game/:id', verifyAuth, (req, res) => {
-  DB.deleteGame(req.params.id)
+  const intId = parseInt(req.params.id, 10);
+  DB.deleteGame(intId)
       .then(() => {
           res.status(204).end();
       })
