@@ -97,11 +97,11 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **User registration** - I did not complete this part of the deliverable.
-- [ ] **User login and logout** - I did not complete this part of the deliverable.
-- [ ] **Stores data in MongoDB** - I did not complete this part of the deliverable.
-- [ ] **Stores credentials in MongoDB** - I did not complete this part of the deliverable.
-- [ ] **Restricts functionality based on authentication** - I did not complete this part of the deliverable.
+- [X] **User registration** - Users can register and have their data stored in my Mongo Database. This data persists and they can login after they end the current instance.
+- [X] **User login and logout** - My login and logout is now fully functional with the data being stored in a database. Logout deletes the auth token from cookies and they get a new one when they log back in. This auth token is then stored back in the DB
+- [X] **Stores data in MongoDB** - I am storing my list of games in MongoDB to have it persist and be available for others to join. I also left the list of games in local storage for easier UI rendering.
+- [X] **Stores credentials in MongoDB** - MongoDB stores all of my user info and persists when a user leaves. Passwords are hashed.
+- [X] **Restricts functionality based on authentication** - My endpoints are still restricted by the verifyAuth middleware. All of my database calls are behind endpoints so a valid auth token is required for most functionality.
 
 ## 🚀 WebSocket deliverable
 
