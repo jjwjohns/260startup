@@ -146,9 +146,17 @@ apiRouter.delete('/game/:id', verifyAuth, (req, res) => {
 // Create a new game
 apiRouter.post('/game', verifyAuth, (req, res) => {
     // console.log("Creating game with id: ", req.body.id);
-  games.push(req.body);
-  res.send(games);
-  console.log(games);
+    DB.addGame(req.body)
+      .then(() => {
+          res.status(201).send(req.body);
+      })
+      .catch((err) => {
+          console.error('Error creating game:', err);
+          res.status(500).send({ msg: 'Internal server error' });
+      });
+  // games.push(req.body);
+  // res.send(games);
+  // console.log(games);
 });
 
 // Default error handler
