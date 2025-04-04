@@ -101,6 +101,13 @@ apiRouter.get('/game/:id', verifyAuth, (req, res) => {
       console.error('Error fetching game:', err);
       res.status(500).send({ msg: 'Internal server error' });
     });
+
+  // const game = games.find((g) => g.id === req.params.id);
+  // if (game) {
+  //   res.send(game);
+  // } else {
+  //   res.status(404).send({ msg: 'Game not found' });
+  // }
 });
 
 // Join a game, Not at full functionality yet, needs database and websocket. (Not currently being used)
@@ -115,15 +122,24 @@ apiRouter.post('/game/:id/join', verifyAuth, (req, res) => {
 });
 
 // Delete a game, Not at full functionality yet, needs database and websocket.
+// Delete a game, Not at full functionality yet, needs database and websocket.
 apiRouter.delete('/game/:id', verifyAuth, (req, res) => {
-    // console.log("Deleting game with id: ", req.params.id);
-    const gameIndex = games.findIndex((g) => g.id === parseInt(req.params.id));
-    if (gameIndex !== -1) {
-        games.splice(gameIndex, 1);
-        res.status(204).end();
-    } else {
-        res.status(404).send({ msg: 'Game not found' });
-    }
+  DB.deleteGame(req.params.id)
+      .then(() => {
+          res.status(204).end();
+      })
+      .catch((err) => {
+          console.error('Error deleting game:', err);
+          res.status(500).send({ msg: 'Internal server error' });
+      }); 
+
+  // const gameIndex = games.findIndex((g) => g.id === parseInt(req.params.id));
+  // if (gameIndex !== -1) {
+  //     games.splice(gameIndex, 1);
+  //     res.status(204).end();
+  // } else {
+  //     res.status(404).send({ msg: 'Game not found' });
+  // }
 });
 
 
