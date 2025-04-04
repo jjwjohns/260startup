@@ -8,7 +8,7 @@ const DB = require('./database.js');
 const authCookieName = 'token';
 
 // The games and users are saved in memory and disappear whenever the service is restarted.
-let games = [];
+// let games = [];
 
 // The service port. In production the front-end code is statically hosted by the service on the same port.
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
@@ -111,15 +111,15 @@ apiRouter.get('/game/:id', verifyAuth, (req, res) => {
 });
 
 // Join a game, Not at full functionality yet, needs database and websocket. (Not currently being used)
-apiRouter.post('/game/:id/join', verifyAuth, (req, res) => {
-  const game = games.find((g) => g.id === req.params.id);
-  if (game) {
-    game.players.push(req.body);
-    res.send(game);
-  } else {
-    res.status(404).send({ msg: 'Game not found' });
-  }
-});
+// apiRouter.post('/game/:id/join', verifyAuth, (req, res) => {
+//   const game = games.find((g) => g.id === req.params.id);
+//   if (game) {
+//     game.players.push(req.body);
+//     res.send(game);
+//   } else {
+//     res.status(404).send({ msg: 'Game not found' });
+//   }
+// });
 
 // Delete a game, Not at full functionality yet, needs database and websocket.
 // Delete a game, Not at full functionality yet, needs database and websocket.
