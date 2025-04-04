@@ -29,7 +29,7 @@ export function NotJoined(props) {
         if (gamesText) {
             games = JSON.parse(gamesText);
         }
-        // games.push(newGame);
+        games.push(newGame);
         localStorage.setItem('games', JSON.stringify(games));
         props.setGames(games);
         // localStorage.setItem('currentGame', games.length - 1);
