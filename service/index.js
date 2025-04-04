@@ -8,7 +8,6 @@ const DB = require('./database.js');
 const authCookieName = 'token';
 
 // The games and users are saved in memory and disappear whenever the service is restarted.
-let users = [];
 let games = [];
 
 // The service port. In production the front-end code is statically hosted by the service on the same port.
@@ -77,17 +76,31 @@ const verifyAuth = async (req, res, next) => {
 
 // GetGames
 apiRouter.get('/games', verifyAuth, (_req, res) => {
-  res.send(games);
+  DB.getGames()
+    .then((games) => {
+      res.send(games);
+    })
+    .catch((err) => {
+      console.error('Error fetching games:', err);
+      res.status(500).send({ msg: 'Internal server error' });
+    });
 });
 
 // GetGame (not currently being used)
 apiRouter.get('/game/:id', verifyAuth, (req, res) => {
-  const game = games.find((g) => g.id === req.params.id);
-  if (game) {
-    res.send(game);
-  } else {
-    res.status(404).send({ msg: 'Game not found' });
-  }
+  DB.getGame(req.params.id)
+    .then((game) => {
+      if (game) {
+        res.send(game);
+      } else {
+        res.status(404).send({ msg: 'Game not found' });
+      }
+    }
+    )
+    .catch((err) => {
+      console.error('Error fetching game:', err);
+      res.status(500).send({ msg: 'Internal server error' });
+    });
 });
 
 // Join a game, Not at full functionality yet, needs database and websocket. (Not currently being used)
