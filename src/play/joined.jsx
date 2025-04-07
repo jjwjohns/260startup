@@ -20,14 +20,6 @@ export async function waiting_function() {
     console.log("Waiting for opponent...");
 }
 
-export async function opponent_joined() {
-    alert("Opponent joined!");
-}
-
-export async function opponent_left() {
-    alert("Opponent left!");
-}
-
 export function Joined(props) {
 
     const [ws, setws] = React.useState(null);
@@ -39,14 +31,6 @@ export function Joined(props) {
     // const [move, setMove] = React.useState(0);    
  
     React.useEffect(() => {
-        console.log("in hook");
-        if (!props.myTurn) {
-            console.log("Waiting for opponent's move...");
-            opponent_Move(mancalaSlots);
-        }
-    }, []);
-
-    React.useEffect(() => {
         const socket = new WS(props.currentGame, waiting_opponent, move);
         setws(socket);
       
@@ -54,6 +38,14 @@ export function Joined(props) {
           socket.socket.close();
         };
       }, []);
+
+    React.useEffect(() => {
+        console.log("in hook");
+        if (!props.myTurn) {
+            console.log("Waiting for opponent's move...");
+            opponent_Move(mancalaSlots);
+        }
+    }, []);
 
     // React.useEffect(() => {
     //     localStorage.setItem('mancalaSlots', JSON.stringify(mancalaSlots));
@@ -82,6 +74,7 @@ export function Joined(props) {
         props.setCurrentGame('');
         localStorage.removeItem('currentGame');
         localStorage.removeItem('mancalaSlots');
+        ws.broadcastEvent({ from: props.currentGame, type: 'close', data: {} });
         quit(id);
     }
 

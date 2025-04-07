@@ -41,18 +41,21 @@ function peerProxy(httpServer) {
         console.log(`Added new client to game ${gameId}`);
         return;
       }
+      if (parsedData.type === 'move') {
 
-      if (clients.length < 2) {
-        socket.send(JSON.stringify({
-          type: 'error',
-          message: 'You\'re not allowed to move yet. Waiting for another player.'
-        }));
-        return;
+        if (clients.length < 2) {
+          socket.send(JSON.stringify({
+            type: 'error',
+            message: 'You\'re not allowed to move yet. Waiting for another player.'
+          }));
+          return;
+        }
       }
+
 
       clients.forEach((client) => {
         if (client !== socket && client.readyState === WebSocket.OPEN) {
-          client.send(JSON.stringify({ type: 'move', move: parsedData.data }));
+          client.send(JSON.stringify({ type: parsedData.type, move: parsedData.data }));
         }
       });
     });

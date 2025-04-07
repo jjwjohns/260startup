@@ -42,20 +42,18 @@ class WS {
       console.log("Received event: ", event);
       if (event.type === 'error') {
         console.log("Tried to move before opponent joined");
-        waiting_function()
+        waiting_function();
       }
 
       if (event.type === 'move') {
         handleMove(event);
       }
-
       if (event.type === 'init') {
-        opponent_joined();
+        alert("Opponent joined!");
       }
       if (event.type === 'close') {
-        opponent_left();
+        alert("Opponent left");
       }
-
 
       // Handle the received event here
       // For example, you can update the game state or notify players
