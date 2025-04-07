@@ -18,9 +18,18 @@ export async function handleMove(event) {
 export function Joined(props) {
 
     const [ws, setws] = React.useState(null);
-    // const [move, setMove] = React.useState(0);
-        
+    const [isWaiting, setIsWaiting] = React.useState(false); 
+    const [mancalaSlots, setMancalaSlots] = React.useState(() => {
+        const storedSlots = localStorage.getItem('mancalaSlots');
+        return storedSlots ? JSON.parse(storedSlots) : [0,4,4,4,4,4,4,0,4,4,4,4,4,4];
+    });
+    // const [move, setMove] = React.useState(0);    
  
+    React.useEffect(() => {
+        if (!props.myTurn) {
+            opponent_Move(mancalaSlots);
+        }
+    }, );
 
     React.useEffect(() => {
         const socket = new WS(props.currentGame, waiting_opponent, move);
@@ -30,12 +39,6 @@ export function Joined(props) {
           socket.socket.close();
         };
       }, []);
-
-
-    const [mancalaSlots, setMancalaSlots] = React.useState(() => {
-        const storedSlots = localStorage.getItem('mancalaSlots');
-        return storedSlots ? JSON.parse(storedSlots) : [0,4,4,4,4,4,4,0,4,4,4,4,4,4];
-    });
 
     // React.useEffect(() => {
     //     localStorage.setItem('mancalaSlots', JSON.stringify(mancalaSlots));
@@ -126,12 +129,6 @@ export function Joined(props) {
             return;
         }
 
-
-
-        // let randomNumber = Math.floor(Math.random() * (13 - 8 + 1)) + 8;
-        // while (oldSlots[randomNumber] == 0){
-        //     randomNumber = Math.floor(Math.random() * (13 - 8 + 1)) + 8;
-        // }
         while (move == 0){
             await delay(100);
         }
@@ -149,11 +146,11 @@ export function Joined(props) {
     }
 
     async function onPressedPit(pitIndex) {
-        if (props.isWaiting) {
+        if (isWaiting) {
             alert("please wait for your turn.");
             return;
         }
-        await props.setIsWaiting(true);
+        await setIsWaiting(true);
         await ws.broadcastEvent({ from: props.currentGame, type: 'move', data: pitIndex });
 
         // if (ws.waiting_opponent) {
@@ -189,13 +186,13 @@ export function Joined(props) {
         await delay(500);
 
         if (goAgain) {
-            props.setIsWaiting(false);
+            setIsWaiting(false);
             return;
         }
         
         // await aiMove(newSlots);
         await opponent_Move(newSlots);
-        props.setIsWaiting(false);
+        setIsWaiting(false);
     }
 
     // GameNotifier.broadcastEvent(props.currentGame, GameEvent.Start, {});

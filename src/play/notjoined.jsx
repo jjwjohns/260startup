@@ -41,7 +41,7 @@ export function NotJoined(props) {
         props.setGames(games);
         localStorage.setItem('currentGame', id);
         props.setCurrentGame(id);
-        props.setIsWaiting(false);
+        props.setMyTurn(true);
         await createGame(newGame);
     }
 
@@ -70,8 +70,6 @@ export function NotJoined(props) {
         localStorage.setItem('games', JSON.stringify(newGames));
         props.setGames(newGames);
         quit(id);
-
-        props.setIsWaiting(false);
     }
 
     function handleRowClick(index) {
