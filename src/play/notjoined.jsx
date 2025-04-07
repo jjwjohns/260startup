@@ -48,6 +48,7 @@ export function NotJoined(props) {
             localStorage.setItem('currentGame', currentGame);
             props.setCurrentGame(currentGame);
         }
+        props.setIsWaiting(true);
     }
 
     function handleRowClick(index) {

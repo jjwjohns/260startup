@@ -6,7 +6,6 @@ import Button from 'react-bootstrap/Button';
 import './play.css';
 
 export function Joined(props) {
-    const [isWaiting, setIsWaiting] = React.useState(false); 
     const [mancalaSlots, setMancalaSlots] = React.useState(() => {
         const storedSlots = localStorage.getItem('mancalaSlots');
         return storedSlots ? JSON.parse(storedSlots) : [0,4,4,4,4,4,4,0,4,4,4,4,4,4];
@@ -81,10 +80,10 @@ export function Joined(props) {
     }
 
     async function onPressedPit(pitIndex) {
-        if (isWaiting) {
+        if (props.isWaiting) {
             return;
         }
-        setIsWaiting(true);
+        props.setIsWaiting(true);
 
         if (MancalaLogic.checkEndGame(mancalaSlots, 1)) {
             const { slots: finalSlots, winner } = MancalaLogic.endGame(mancalaSlots);
@@ -113,12 +112,12 @@ export function Joined(props) {
         await delay(500);
 
         if (goAgain) {
-            setIsWaiting(false);
+            props.setIsWaiting(false);
             return;
         }
 
         await aiMove(newSlots);
-        setIsWaiting(false);
+        props.setIsWaiting(false);
     }
 
     return (

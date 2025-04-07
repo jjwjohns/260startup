@@ -7,6 +7,7 @@ import { NotJoined } from './notjoined';
 export function Play({userName}) {
   const [currentGame, setCurrentGame] = useState(localStorage.getItem('currentGame') || '');
   const [games, setGames] = React.useState([]);
+  const [isWaiting, setIsWaiting] = React.useState(false); 
   
     // React.useEffect(() => {
     //     const gamesText = localStorage.getItem('games');
@@ -36,6 +37,8 @@ export function Play({userName}) {
         setCurrentGame={setCurrentGame}
         games={games}
         setGames={setGames}
+        isWaiting={isWaiting}
+        setIsWaiting={setIsWaiting}
         />
       )}
 
@@ -45,6 +48,8 @@ export function Play({userName}) {
         setCurrentGame={setCurrentGame}
         games={games}
         setGames={setGames}
+        isWaiting={isWaiting}
+        setIsWaiting={setIsWaiting}
         />
       )}
     </main>
