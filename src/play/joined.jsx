@@ -1,11 +1,11 @@
 import React from 'react';
 import { MancalaLogic } from './mancalaLogic';
 import { delay } from './delay';
+import {WS} from './clientWS';
 // import { GameEvent, GameNotifier } from './gameNotifier';
 
 import Button from 'react-bootstrap/Button';
 import './play.css';
-import { GameEvent, GameNotifier } from './gameNotifier';
 
 export function Joined(props) {
     // let port = window.location.port;
@@ -19,18 +19,19 @@ export function Joined(props) {
     //     console.log("WebSocket connection established");
     //     // GameNotifier.broadcastEvent(props.currentGame, GameEvent.System, { msg: 'connected' });
     // };
-    const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-    const ws = new WebSocket(`${protocol}://${window.location.hostname}:4000/ws`);
-    ws.onopen = (event) => {
-        console.log("WebSocket connection established");
-        // GameNotifier.broadcastEvent(props.currentGame, GameEvent.System, { msg: 'connected' });
-        ws.send("hello, how are you?");
-    };
+    // const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+    // const ws = new WebSocket(`${protocol}://${window.location.hostname}:4000/ws`);
+    // ws.onopen = (event) => {
+    //     console.log("WebSocket connection established");
+    //     // GameNotifier.broadcastEvent(props.currentGame, GameEvent.System, { msg: 'connected' });
+    //     // ws.send("hello, how are you?");
+    // };
 
-    ws.onmessage = (event) => {
-        console.log("Received message (client side): ", event.data);
-    };
+    // ws.onmessage = (event) => {
+    //     console.log("Received message (client side): ", event.data);
+    // };
 
+    const ws = new WS(props.currentGame);
 
 
     const [mancalaSlots, setMancalaSlots] = React.useState(() => {

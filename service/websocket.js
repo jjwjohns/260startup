@@ -48,26 +48,16 @@ function peerProxy(httpServer) {
         }
       });
 
-    // socket.on('message', function message(data) {
-    //   socketServer.clients.forEach((client) => {
-    //     if (client !== socket && client.readyState === WebSocket.OPEN) {
-    //       client.send(data);
-    //     }
-    //   });
-    // });
-
     socket.on('close', () => {
       console.log('Client disconnected');
       
-      // Remove client from the game
       if (gameId && games.has(gameId)) {
         const clients = games.get(gameId);
         const index = clients.indexOf(socket);
         if (index !== -1) {
-          clients.splice(index, 1); // Remove the socket
+          clients.splice(index, 1);
           console.log(`Client removed from game ${gameId}`);
-          
-          // If there are no clients left in the game, delete the game
+
           if (clients.length === 0) {
             games.delete(gameId);
             console.log(`Game ${gameId} deleted`);
