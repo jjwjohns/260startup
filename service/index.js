@@ -126,7 +126,7 @@ apiRouter.get('/game/:id', verifyAuth, (req, res) => {
 //   }
 // });
 
-// Delete a game, Not at full functionality yet, needs database and websocket.
+// Delete a game.
 apiRouter.delete('/game/:id', verifyAuth, (req, res) => {
   const intId = parseInt(req.params.id, 10);
   DB.deleteGame(intId)
