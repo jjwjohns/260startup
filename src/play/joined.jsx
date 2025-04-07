@@ -8,11 +8,24 @@ import Button from 'react-bootstrap/Button';
 import './play.css';
 
 let move = 0;
-let waiting_opponent = true;
+let waiting_opponent = false;
 
 export async function handleMove(event) {
     move = event.move;
     console.log("Move received: ", move);
+}
+
+export async function waiting_function() {
+    waiting_opponent = true;
+    console.log("Waiting for opponent...");
+}
+
+export async function opponent_joined() {
+    alert("Opponent joined!");
+}
+
+export async function opponent_left() {
+    alert("Opponent left!");
 }
 
 export function Joined(props) {
@@ -26,10 +39,12 @@ export function Joined(props) {
     // const [move, setMove] = React.useState(0);    
  
     React.useEffect(() => {
+        console.log("in hook");
         if (!props.myTurn) {
+            console.log("Waiting for opponent's move...");
             opponent_Move(mancalaSlots);
         }
-    }, );
+    }, []);
 
     React.useEffect(() => {
         const socket = new WS(props.currentGame, waiting_opponent, move);
@@ -44,30 +59,30 @@ export function Joined(props) {
     //     localStorage.setItem('mancalaSlots', JSON.stringify(mancalaSlots));
     // }, [mancalaSlots]);
 
-    // async function quit(gameID) {
-    //     await fetch(`/api/game/${gameID}`, {
-    //         method: 'DELETE',
-    //         headers: { 'content-type': 'application/json' },
-    //     });
-    // }
+    async function quit(gameID) {
+        await fetch(`/api/game/${gameID}`, {
+            method: 'DELETE',
+            headers: { 'content-type': 'application/json' },
+        });
+    }
 
     function onPressedQuit() {
-        // let id = parseInt(localStorage.getItem('currentGame'));
+        let id = parseInt(localStorage.getItem('currentGame'));
 
-        // let games = [];
-        // const gamesText = localStorage.getItem('games');
-        // if (gamesText) {
-        //     games = JSON.parse(gamesText);
-        // }
-        // const index = games.findIndex((game) => game.id === id);
+        let games = [];
+        const gamesText = localStorage.getItem('games');
+        if (gamesText) {
+            games = JSON.parse(gamesText);
+        }
+        const index = games.findIndex((game) => game.id === id);
 
-        // let newGames = [...games.slice(0, index), ...games.slice(index + 1)];
-        // localStorage.setItem('games', JSON.stringify(newGames));
-        // props.setGames(newGames);
+        let newGames = [...games.slice(0, index), ...games.slice(index + 1)];
+        localStorage.setItem('games', JSON.stringify(newGames));
+        props.setGames(newGames);
         props.setCurrentGame('');
         localStorage.removeItem('currentGame');
-        // localStorage.removeItem('mancalaSlots');
-        // quit(id);
+        localStorage.removeItem('mancalaSlots');
+        quit(id);
     }
 
     async function aiMove(oldSlots) {
@@ -109,7 +124,7 @@ export function Joined(props) {
     }
 
     async function opponent_Move(oldSlots) {
-        await delay(2000);
+        // await delay(2000);
         if (MancalaLogic.checkEndGame(oldSlots, 2)) {
             const { slots: finalSlots, winner } = MancalaLogic.endGame(oldSlots);
             setMancalaSlots(finalSlots);
@@ -119,7 +134,7 @@ export function Joined(props) {
                 alert("It's a tie!");
             }
             else if (winner == 2) {
-                alert("AI wins!");
+                alert("You Lost:(");
             }
             else {
                 alert("You win!");
@@ -129,52 +144,58 @@ export function Joined(props) {
             return;
         }
 
+        console.log("move: ", move);
         while (move == 0){
             await delay(100);
         }
+        console.log("move: ", move);
         
         let { newSlots, goAgain } = MancalaLogic.makeMove(oldSlots, 2, 7+move);
-        move = 0;
         
         setMancalaSlots(newSlots);
         await new Promise(resolve => setTimeout(resolve, 0));
-        await delay(500);
+        // await delay(1000);
+        move = 0;
 
         if (goAgain) {
             await opponent_Move(newSlots);
         }
+        props.setMyTurn(true);
     }
 
     async function onPressedPit(pitIndex) {
-        if (isWaiting) {
+        if (isWaiting || !props.myTurn) {
             alert("please wait for your turn.");
             return;
         }
-        await setIsWaiting(true);
         await ws.broadcastEvent({ from: props.currentGame, type: 'move', data: pitIndex });
+        // await delay(1000);
 
-        // if (ws.waiting_opponent) {
-        //     alert("Please wait for another player to join.")
-        //     return;
-        // }
+        if (waiting_opponent) {
+            alert("Please wait for another player to join.")
+            waiting_opponent = false;
+            return;
+        }
+
+        await setIsWaiting(true);
 
 
         if (MancalaLogic.checkEndGame(mancalaSlots, 1)) {
             const { slots: finalSlots, winner } = MancalaLogic.endGame(mancalaSlots);
             setMancalaSlots(finalSlots);
             await new Promise(resolve => setTimeout(resolve, 0));
-            await delay(1000);
+            // await delay(1000);
 
             if (winner == 0) {
                 alert("It's a tie!");
             }
             else if (winner == 2) {
-                alert("AI wins!");
+                alert("You Lost!");
             }
             else {
                 alert("You win!");
             }
-            await delay(1000);
+            // await delay(1000);
             onPressedQuit();
             return;
         }
@@ -183,7 +204,7 @@ export function Joined(props) {
         
         setMancalaSlots(newSlots);
         await new Promise(resolve => setTimeout(resolve, 0));
-        await delay(500);
+        // await delay(2000);
 
         if (goAgain) {
             setIsWaiting(false);

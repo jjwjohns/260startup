@@ -42,7 +42,6 @@ function peerProxy(httpServer) {
         return;
       }
 
-      console.log(clients.length);
       if (clients.length < 2) {
         socket.send(JSON.stringify({
           type: 'error',
@@ -59,6 +58,13 @@ function peerProxy(httpServer) {
     });
 
     socket.on('close', () => {
+      // const clients = games.get(gameId);
+      // clients.forEach((client) => {
+      //   if (client !== socket && client.readyState === WebSocket.OPEN) {
+      //     client.send(JSON.stringify({ type: 'close', move: parsedData.data }));
+      //   }
+      // });
+
       console.log('Client disconnected');
       for (const [gameId, clients] of games.entries()) {
         const index = clients.indexOf(socket);

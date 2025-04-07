@@ -69,6 +69,7 @@ export function NotJoined(props) {
         let newGames = [...games.slice(0, index), ...games.slice(index + 1)];
         localStorage.setItem('games', JSON.stringify(newGames));
         props.setGames(newGames);
+        props.setMyTurn(false);
         quit(id);
     }
 

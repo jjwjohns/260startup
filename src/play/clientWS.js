@@ -41,17 +41,19 @@ class WS {
     receiveEvent(event) {
       console.log("Received event: ", event);
       if (event.type === 'error') {
-        console.log("Received error event: is waiting is now false");
-        this.waiting_opponent = true;
-
-        console.error('Error:', event.message);
-        return;
+        console.log("Tried to move before opponent joined");
+        waiting_function()
       }
 
       if (event.type === 'move') {
         handleMove(event);
+      }
 
-        // alert("Received move event: ", event.move);
+      if (event.type === 'init') {
+        opponent_joined();
+      }
+      if (event.type === 'close') {
+        opponent_left();
       }
 
 
