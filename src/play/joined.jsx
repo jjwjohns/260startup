@@ -118,6 +118,8 @@ export function Joined(props) {
     }
 
     async function onPressedPit(pitIndex) {
+        ws.broadcastEvent({ from: props.currentGame, type: 'move', data: pitIndex });
+        return;
         if (props.isWaiting) {
             return;
         }

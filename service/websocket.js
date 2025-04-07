@@ -22,6 +22,7 @@ function peerProxy(httpServer) {
       }
 
       console.log('Parsed data:', parsedData);
+      console.log('step1');
 
       gameId = parsedData.from;
       if (!gameId) {
@@ -52,7 +53,7 @@ function peerProxy(httpServer) {
 
       clients.forEach((client) => {
         if (client !== socket && client.readyState === WebSocket.OPEN) {
-          client.send(JSON.stringify({ type: 'move', gameId, move: parsedData.move }));
+          client.send(JSON.stringify({ type: 'move', move: parsedData.data }));
         }
       });
     });

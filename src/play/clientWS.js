@@ -45,6 +45,11 @@ class WS {
         return;
       }
 
+      if (event.type === 'move') {
+        console.log("Received move event: ", event.move);
+        // alert("Received move event: ", event.move);
+      }
+
 
       // Handle the received event here
       // For example, you can update the game state or notify players
