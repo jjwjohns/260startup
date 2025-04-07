@@ -23,7 +23,7 @@ export function NotJoined(props) {
         });
     }
 
-    // After websocket and DB are set up you will automatically join the game
+
     async function onPressedCreate() {
         const id = Math.floor(Date.now() * Math.random());
         const now = new Date();
@@ -41,6 +41,7 @@ export function NotJoined(props) {
         props.setGames(games);
         localStorage.setItem('currentGame', id);
         props.setCurrentGame(id);
+        props.setIsWaiting(false);
         await createGame(newGame);
     }
 
@@ -70,7 +71,7 @@ export function NotJoined(props) {
         props.setGames(newGames);
         quit(id);
 
-        props.setIsWaiting(true);
+        props.setIsWaiting(false);
     }
 
     function handleRowClick(index) {

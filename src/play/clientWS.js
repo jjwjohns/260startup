@@ -1,3 +1,5 @@
+import { handleMove } from "./joined";
+
 // class EventMessage {
 //   constructor(from, type, value) {
 //     this.from = from;
@@ -6,9 +8,9 @@
 //   }
 // }
 class WS {
-    constructor(gameID, setIsWaiting) {
-      this.setIsWaiting = setIsWaiting;
-      this.gameID = gameID;
+    constructor(gameID, waiting_opponent, move) {
+      this.waiting_opponent = waiting_opponent;
+      this.move = move;
 
       let port = window.location.port;
       console.log("port: ", port);
@@ -39,14 +41,16 @@ class WS {
     receiveEvent(event) {
       console.log("Received event: ", event);
       if (event.type === 'error') {
-        this.setIsWaiting(false);
+        console.log("Received error event: is waiting is now false");
+        this.waiting_opponent = true;
 
         console.error('Error:', event.message);
         return;
       }
 
       if (event.type === 'move') {
-        console.log("Received move event: ", event.move);
+        handleMove(event);
+
         // alert("Received move event: ", event.move);
       }
 

@@ -11,7 +11,7 @@ function peerProxy(httpServer) {
 
     socket.on('message', (message) => {
       let gameId = null;
-      console.log('Received message:', message);
+      // console.log('Received message:', message);
       
       let parsedData;
       try {
@@ -21,8 +21,7 @@ function peerProxy(httpServer) {
         return;
       }
 
-      console.log('Parsed data:', parsedData);
-      console.log('step1');
+      // console.log('Parsed data:', parsedData);
 
       gameId = parsedData.from;
       if (!gameId) {
@@ -43,6 +42,7 @@ function peerProxy(httpServer) {
         return;
       }
 
+      console.log(clients.length);
       if (clients.length < 2) {
         socket.send(JSON.stringify({
           type: 'error',

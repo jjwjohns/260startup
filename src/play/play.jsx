@@ -8,6 +8,7 @@ export function Play({userName}) {
   const [currentGame, setCurrentGame] = useState(localStorage.getItem('currentGame') || '');
   const [games, setGames] = React.useState([]);
   const [isWaiting, setIsWaiting] = React.useState(false); 
+  const [myTurn, setMyTurn] = React.useState(false);
   
     // React.useEffect(() => {
     //     const gamesText = localStorage.getItem('games');
@@ -23,7 +24,7 @@ export function Play({userName}) {
           setGames(games);
           localStorage.setItem('games', JSON.stringify(games));
         });
-    }, []);
+    }, [games]);
   
 
   return (

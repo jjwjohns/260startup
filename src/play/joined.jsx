@@ -7,35 +7,23 @@ import {WS} from './clientWS';
 import Button from 'react-bootstrap/Button';
 import './play.css';
 
-export function Joined(props) {
-    // let port = window.location.port;
-    // const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-    // const ws = new WebSocket(`${protocol}://${window.location.hostname}:4000/ws`);
-    // console.log("protocol: ", protocol);
-    // console.log("hostname: ", window.location.hostname);
-    // console.log("port: ", port);
-    // console.log("ws: ", ws);
-    // ws.onopen = (event) => {
-    //     console.log("WebSocket connection established");
-    //     // GameNotifier.broadcastEvent(props.currentGame, GameEvent.System, { msg: 'connected' });
-    // };
-    // const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-    // const ws = new WebSocket(`${protocol}://${window.location.hostname}:4000/ws`);
-    // ws.onopen = (event) => {
-    //     console.log("WebSocket connection established");
-    //     // GameNotifier.broadcastEvent(props.currentGame, GameEvent.System, { msg: 'connected' });
-    //     // ws.send("hello, how are you?");
-    // };
+let move = 0;
+let waiting_opponent = true;
 
-    // ws.onmessage = (event) => {
-    //     console.log("Received message (client side): ", event.data);
-    // };
+export async function handleMove(event) {
+    move = event.move;
+    console.log("Move received: ", move);
+}
+
+export function Joined(props) {
 
     const [ws, setws] = React.useState(null);
+    // const [move, setMove] = React.useState(0);
+        
  
 
     React.useEffect(() => {
-        const socket = new WS(props.currentGame, props.setIsWaiting);
+        const socket = new WS(props.currentGame, waiting_opponent, move);
         setws(socket);
       
         return () => {
@@ -117,20 +105,61 @@ export function Joined(props) {
         }
     }
 
-    async function onPressedPit(pitIndex) {
-        ws.broadcastEvent({ from: props.currentGame, type: 'move', data: pitIndex });
-        return;
-        if (props.isWaiting) {
+    async function opponent_Move(oldSlots) {
+        await delay(2000);
+        if (MancalaLogic.checkEndGame(oldSlots, 2)) {
+            const { slots: finalSlots, winner } = MancalaLogic.endGame(oldSlots);
+            setMancalaSlots(finalSlots);
+            await new Promise(resolve => setTimeout(resolve, 500));
+            await delay(1000);
+            if (winner == 0) {
+                alert("It's a tie!");
+            }
+            else if (winner == 2) {
+                alert("AI wins!");
+            }
+            else {
+                alert("You win!");
+            }
+            await delay(1000);
+            onPressedQuit();
             return;
         }
-        props.setIsWaiting(true);
+
+
+
+        // let randomNumber = Math.floor(Math.random() * (13 - 8 + 1)) + 8;
+        // while (oldSlots[randomNumber] == 0){
+        //     randomNumber = Math.floor(Math.random() * (13 - 8 + 1)) + 8;
+        // }
+        while (move == 0){
+            await delay(100);
+        }
+        
+        let { newSlots, goAgain } = MancalaLogic.makeMove(oldSlots, 2, 7+move);
+        move = 0;
+        
+        setMancalaSlots(newSlots);
+        await new Promise(resolve => setTimeout(resolve, 0));
+        await delay(500);
+
+        if (goAgain) {
+            await opponent_Move(newSlots);
+        }
+    }
+
+    async function onPressedPit(pitIndex) {
+        if (props.isWaiting) {
+            alert("please wait for your turn.");
+            return;
+        }
+        await props.setIsWaiting(true);
         await ws.broadcastEvent({ from: props.currentGame, type: 'move', data: pitIndex });
 
-        if (!props.isWaiting) {
-            props.setIsWaiting(true);
-            alert("Please wait for another player to join.")
-            return;
-        }
+        // if (ws.waiting_opponent) {
+        //     alert("Please wait for another player to join.")
+        //     return;
+        // }
 
 
         if (MancalaLogic.checkEndGame(mancalaSlots, 1)) {
@@ -163,8 +192,9 @@ export function Joined(props) {
             props.setIsWaiting(false);
             return;
         }
-
-        await aiMove(newSlots);
+        
+        // await aiMove(newSlots);
+        await opponent_Move(newSlots);
         props.setIsWaiting(false);
     }
 
