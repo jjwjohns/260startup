@@ -34,6 +34,7 @@ export function Joined(props) {
     const ws = new WS(props.currentGame);
 
 
+
     const [mancalaSlots, setMancalaSlots] = React.useState(() => {
         const storedSlots = localStorage.getItem('mancalaSlots');
         return storedSlots ? JSON.parse(storedSlots) : [0,4,4,4,4,4,4,0,4,4,4,4,4,4];

@@ -1,10 +1,8 @@
-const { data } = require('react-router-dom');
 const { WebSocketServer } = require('ws');
 
 function peerProxy(httpServer) {
   const socketServer = new WebSocketServer({ server: httpServer });
   const games = new Map();
-
 
   socketServer.on('connection', (socket) => {
     socket.isAlive = true;
@@ -12,12 +10,20 @@ function peerProxy(httpServer) {
 
 
     socket.on('message', (message) => {
-      let gameId = null; 
+      let gameId = null;
       console.log('Received message:', message);
-      const parsedData = JSON.parse(data);
+      
+      let parsedData;
+      try {
+        parsedData = JSON.parse(message);
+      } catch (err) {
+        console.error('Error parsing message:', err);
+        return;
+      }
+
       console.log('Parsed data:', parsedData);
-      // Check if the message is a game event
-      gameId = parsedData.gameId;
+
+      gameId = parsedData.from;
       if (!gameId) {
         console.log('No game ID found in message');
         return;
@@ -37,51 +43,49 @@ function peerProxy(httpServer) {
         return;
       }
 
-      if (!games.get(gameId).includes(socket)) {
-        games.get(gameId).push(socket);
+      if (!clients.includes(socket)) {
+        clients.push(socket);
         console.log(`Added new client to game ${gameId}`);
       }
 
-      games.get(gameId).forEach((client) => {
+      clients.forEach((client) => {
         if (client !== socket && client.readyState === WebSocket.OPEN) {
           client.send(JSON.stringify({ type: 'move', gameId, move: parsedData.move }));
         }
       });
+    });
 
     socket.on('close', () => {
       console.log('Client disconnected');
       
-      if (gameId && games.has(gameId)) {
-        const clients = games.get(gameId);
-        const index = clients.indexOf(socket);
-        if (index !== -1) {
-          clients.splice(index, 1);
-          console.log(`Client removed from game ${gameId}`);
+      // if (gameId && games.has(gameId)) {
+      //   const clients = games.get(gameId);
+      //   const index = clients.indexOf(socket);
+      //   if (index !== -1) {
+      //     clients.splice(index, 1);
+      //     console.log(`Client removed from game ${gameId}`);
 
-          if (clients.length === 0) {
-            games.delete(gameId);
-            console.log(`Game ${gameId} deleted`);
-          }
-        }
-      }
+      //     if (clients.length === 0) {
+      //       games.delete(gameId);
+      //       console.log(`Game ${gameId} deleted`);
+      //     }
+      //   }
+      // }
     });
 
-    });
-
-
-    // Respond to pong messages by marking the connection alive
     socket.on('pong', () => {
       socket.isAlive = true;
     });
   });
 
-  // Periodically send out a ping message to make sure clients are alive
   setInterval(() => {
     socketServer.clients.forEach(function each(client) {
-      if (client.isAlive === false) return client.terminate();
-
-      client.isAlive = false;
-      client.ping();
+      if (client.isAlive === false) {
+        client.terminate();
+      } else {
+        client.isAlive = false;
+        client.ping();
+      }
     });
   }, 10000);
 }
