@@ -35,7 +35,7 @@ export function Joined(props) {
  
 
     React.useEffect(() => {
-        const socket = new WS(props.currentGame);
+        const socket = new WS(props.currentGame, props.setIsWaiting);
         setws(socket);
       
         return () => {
@@ -53,30 +53,30 @@ export function Joined(props) {
     //     localStorage.setItem('mancalaSlots', JSON.stringify(mancalaSlots));
     // }, [mancalaSlots]);
 
-    async function quit(gameID) {
-        await fetch(`/api/game/${gameID}`, {
-            method: 'DELETE',
-            headers: { 'content-type': 'application/json' },
-        });
-    }
+    // async function quit(gameID) {
+    //     await fetch(`/api/game/${gameID}`, {
+    //         method: 'DELETE',
+    //         headers: { 'content-type': 'application/json' },
+    //     });
+    // }
 
     function onPressedQuit() {
-        let id = parseInt(localStorage.getItem('currentGame'));
+        // let id = parseInt(localStorage.getItem('currentGame'));
 
-        let games = [];
-        const gamesText = localStorage.getItem('games');
-        if (gamesText) {
-            games = JSON.parse(gamesText);
-        }
-        const index = games.findIndex((game) => game.id === id);
+        // let games = [];
+        // const gamesText = localStorage.getItem('games');
+        // if (gamesText) {
+        //     games = JSON.parse(gamesText);
+        // }
+        // const index = games.findIndex((game) => game.id === id);
 
-        let newGames = [...games.slice(0, index), ...games.slice(index + 1)];
-        localStorage.setItem('games', JSON.stringify(newGames));
-        props.setGames(newGames);
+        // let newGames = [...games.slice(0, index), ...games.slice(index + 1)];
+        // localStorage.setItem('games', JSON.stringify(newGames));
+        // props.setGames(newGames);
         props.setCurrentGame('');
         localStorage.removeItem('currentGame');
         // localStorage.removeItem('mancalaSlots');
-        quit(id);
+        // quit(id);
     }
 
     async function aiMove(oldSlots) {
@@ -122,7 +122,13 @@ export function Joined(props) {
             return;
         }
         props.setIsWaiting(true);
-        ws.broadcastEvent({ from: props.currentGame, type: 'move', data: pitIndex });
+        await ws.broadcastEvent({ from: props.currentGame, type: 'move', data: pitIndex });
+
+        if (!props.isWaiting) {
+            props.setIsWaiting(true);
+            alert("Please wait for another player to join.")
+            return;
+        }
 
 
         if (MancalaLogic.checkEndGame(mancalaSlots, 1)) {

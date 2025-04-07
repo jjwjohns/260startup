@@ -16,6 +16,13 @@ export function NotJoined(props) {
 
       }
 
+    async function quit(gameID) {
+        await fetch(`/api/game/${gameID}`, {
+            method: 'DELETE',
+            headers: { 'content-type': 'application/json' },
+        });
+    }
+
     // After websocket and DB are set up you will automatically join the game
     async function onPressedCreate() {
         const id = Math.floor(Date.now() * Math.random());
@@ -48,6 +55,21 @@ export function NotJoined(props) {
             localStorage.setItem('currentGame', currentGame);
             props.setCurrentGame(currentGame);
         }
+
+        let id = parseInt(localStorage.getItem('currentGame'));
+
+        let games = [];
+        const gamesText = localStorage.getItem('games');
+        if (gamesText) {
+            games = JSON.parse(gamesText);
+        }
+        const index = games.findIndex((game) => game.id === id);
+
+        let newGames = [...games.slice(0, index), ...games.slice(index + 1)];
+        localStorage.setItem('games', JSON.stringify(newGames));
+        props.setGames(newGames);
+        quit(id);
+
         props.setIsWaiting(true);
     }
 

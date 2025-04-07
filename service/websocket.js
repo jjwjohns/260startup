@@ -31,6 +31,7 @@ function peerProxy(httpServer) {
 
       if (!games.has(gameId)) {
         games.set(gameId, []);
+        console.log(`Created new game with ID: ${gameId}`);
       }
 
       const clients = games.get(gameId);
@@ -38,6 +39,7 @@ function peerProxy(httpServer) {
       if (!clients.includes(socket)) {
         clients.push(socket);
         console.log(`Added new client to game ${gameId}`);
+        return;
       }
 
       if (clients.length < 2) {

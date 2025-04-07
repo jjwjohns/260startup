@@ -1,12 +1,13 @@
-class EventMessage {
-  constructor(from, type, value) {
-    this.from = from;
-    this.type = type;
-    this.value = value;
-  }
-}
+// class EventMessage {
+//   constructor(from, type, value) {
+//     this.from = from;
+//     this.type = type;
+//     this.value = value;
+//   }
+// }
 class WS {
-    constructor(gameID) {
+    constructor(gameID, setIsWaiting) {
+      this.setIsWaiting = setIsWaiting;
       this.gameID = gameID;
 
       let port = window.location.port;
@@ -32,12 +33,19 @@ class WS {
     }
 
     broadcastEvent(from, type, value) {
-      const event = new EventMessage(from, type, value);
-      this.socket.send(JSON.stringify(event));
+      this.socket.send(JSON.stringify(from, type, value));
     }
 
     receiveEvent(event) {
       console.log("Received event: ", event);
+      if (event.type === 'error') {
+        this.setIsWaiting(false);
+
+        console.error('Error:', event.message);
+        return;
+      }
+
+
       // Handle the received event here
       // For example, you can update the game state or notify players
     }
