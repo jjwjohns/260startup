@@ -32,8 +32,8 @@ export function NotJoined(props) {
         games.push(newGame);
         localStorage.setItem('games', JSON.stringify(games));
         props.setGames(games);
-        localStorage.setItem('currentGame', games.length - 1);
-        props.setCurrentGame(games.length - 1);
+        localStorage.setItem('currentGame', id);
+        props.setCurrentGame(id);
         await createGame(newGame);
     }
 

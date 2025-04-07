@@ -1,11 +1,38 @@
 import React from 'react';
 import { MancalaLogic } from './mancalaLogic';
 import { delay } from './delay';
+// import { GameEvent, GameNotifier } from './gameNotifier';
 
 import Button from 'react-bootstrap/Button';
 import './play.css';
+import { GameEvent, GameNotifier } from './gameNotifier';
 
 export function Joined(props) {
+    // let port = window.location.port;
+    // const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+    // const ws = new WebSocket(`${protocol}://${window.location.hostname}:4000/ws`);
+    // console.log("protocol: ", protocol);
+    // console.log("hostname: ", window.location.hostname);
+    // console.log("port: ", port);
+    // console.log("ws: ", ws);
+    // ws.onopen = (event) => {
+    //     console.log("WebSocket connection established");
+    //     // GameNotifier.broadcastEvent(props.currentGame, GameEvent.System, { msg: 'connected' });
+    // };
+    const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+    const ws = new WebSocket(`${protocol}://${window.location.hostname}:4000/ws`);
+    ws.onopen = (event) => {
+        console.log("WebSocket connection established");
+        // GameNotifier.broadcastEvent(props.currentGame, GameEvent.System, { msg: 'connected' });
+        ws.send("hello, how are you?");
+    };
+
+    ws.onmessage = (event) => {
+        console.log("Received message (client side): ", event.data);
+    };
+
+
+
     const [mancalaSlots, setMancalaSlots] = React.useState(() => {
         const storedSlots = localStorage.getItem('mancalaSlots');
         return storedSlots ? JSON.parse(storedSlots) : [0,4,4,4,4,4,4,0,4,4,4,4,4,4];
@@ -119,6 +146,8 @@ export function Joined(props) {
         await aiMove(newSlots);
         props.setIsWaiting(false);
     }
+
+    // GameNotifier.broadcastEvent(props.currentGame, GameEvent.Start, {});
 
     return (
         <div id ="joined" className = "d-flex justify-content-center">
