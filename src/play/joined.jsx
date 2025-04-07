@@ -31,8 +31,17 @@ export function Joined(props) {
     //     console.log("Received message (client side): ", event.data);
     // };
 
-    const ws = new WS(props.currentGame);
+    const [ws, setws] = React.useState(null);
+ 
 
+    React.useEffect(() => {
+        const socket = new WS(props.currentGame);
+        setws(socket);
+      
+        return () => {
+          socket.socket.close();
+        };
+      }, []);
 
 
     const [mancalaSlots, setMancalaSlots] = React.useState(() => {
@@ -113,6 +122,8 @@ export function Joined(props) {
             return;
         }
         props.setIsWaiting(true);
+        ws.broadcastEvent({ from: props.currentGame, type: 'move', data: pitIndex });
+
 
         if (MancalaLogic.checkEndGame(mancalaSlots, 1)) {
             const { slots: finalSlots, winner } = MancalaLogic.endGame(mancalaSlots);

@@ -35,17 +35,17 @@ function peerProxy(httpServer) {
 
       const clients = games.get(gameId);
 
+      if (!clients.includes(socket)) {
+        clients.push(socket);
+        console.log(`Added new client to game ${gameId}`);
+      }
+
       if (clients.length < 2) {
         socket.send(JSON.stringify({
           type: 'error',
           message: 'You\'re not allowed to move yet. Waiting for another player.'
         }));
         return;
-      }
-
-      if (!clients.includes(socket)) {
-        clients.push(socket);
-        console.log(`Added new client to game ${gameId}`);
       }
 
       clients.forEach((client) => {
@@ -57,20 +57,19 @@ function peerProxy(httpServer) {
 
     socket.on('close', () => {
       console.log('Client disconnected');
-      
-      // if (gameId && games.has(gameId)) {
-      //   const clients = games.get(gameId);
-      //   const index = clients.indexOf(socket);
-      //   if (index !== -1) {
-      //     clients.splice(index, 1);
-      //     console.log(`Client removed from game ${gameId}`);
+      for (const [gameId, clients] of games.entries()) {
+        const index = clients.indexOf(socket);
+        if (index !== -1) {
+          clients.splice(index, 1);
+          console.log(`Client removed from game ${gameId}`);
 
-      //     if (clients.length === 0) {
-      //       games.delete(gameId);
-      //       console.log(`Game ${gameId} deleted`);
-      //     }
-      //   }
-      // }
+          if (clients.length === 0) {
+            games.delete(gameId);
+            console.log(`Game ${gameId} deleted`);
+          }
+          break;
+        }
+      }
     });
 
     socket.on('pong', () => {

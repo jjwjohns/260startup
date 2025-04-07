@@ -6,8 +6,8 @@ class EventMessage {
   }
 }
 class WS {
-    constructor() {
-
+    constructor(gameID) {
+      this.gameID = gameID;
 
       let port = window.location.port;
       console.log("port: ", port);
@@ -17,6 +17,7 @@ class WS {
 
       this.socket.onopen = (event) => {
         console.log("WebSocket connection established");
+        this.socket.send(JSON.stringify({ from: gameID, type: 'init', msg: 'connected' }));
       };
       this.socket.onclose = (event) => {
         console.log("WebSocket connection closed");
