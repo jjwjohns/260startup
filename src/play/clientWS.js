@@ -20,7 +20,7 @@ class WS {
 
       this.socket.onopen = (event) => {
         console.log("WebSocket connection established");
-        this.socket.send(JSON.stringify({ from: gameID, type: 'init', msg: 'connected' }));
+        this.socket.send(JSON.stringify({ from: gameID, type: 'init', data: 'connected' }));
       };
       this.socket.onclose = (event) => {
         console.log("WebSocket connection closed");

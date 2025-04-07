@@ -21,7 +21,7 @@ function peerProxy(httpServer) {
         return;
       }
 
-      // console.log('Parsed data:', parsedData);
+      console.log('Parsed data:', parsedData);
 
       gameId = parsedData.from;
       if (!gameId) {
@@ -34,12 +34,11 @@ function peerProxy(httpServer) {
         console.log(`Created new game with ID: ${gameId}`);
       }
 
-      const clients = games.get(gameId);
+      let clients = games.get(gameId);
 
       if (!clients.includes(socket)) {
         clients.push(socket);
         console.log(`Added new client to game ${gameId}`);
-        return;
       }
       if (parsedData.type === 'move') {
 
@@ -51,8 +50,7 @@ function peerProxy(httpServer) {
           return;
         }
       }
-
-
+      
       clients.forEach((client) => {
         if (client !== socket && client.readyState === WebSocket.OPEN) {
           client.send(JSON.stringify({ type: parsedData.type, move: parsedData.data }));
