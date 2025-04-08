@@ -107,8 +107,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Backend listens for WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Frontend makes WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Data sent over WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **WebSocket data displayed** - I did not complete this part of the deliverable.
-- [ ] **Application is fully functional** - I did not complete this part of the deliverable.
+- [X] **Backend listens for WebSocket connection** - I created a backend listener and proxy for websockets. It organizes communications into games and then only communicates messages between games. It sends moves, joins, disconnects, and errors.
+- [X] **Frontend makes WebSocket connection** - Front end sends websocket communications for every move it makes and when it joins or leaves a game.
+- [X] **Data sent over WebSocket connection** - Data is sent back and forth between two clients when they are in the same game.
+- [X] **WebSocket data displayed** - When a client joins or leaves a game the paired client is notified. When a client makes a move it sends that move over to the paired client where it is displayed on their mancala board. These communications are blocked when it is not their turn or when only one client is in a game.
+- [X] **Application is fully functional** - Yep! You can now play Mancala online with your friends!
