@@ -1,5 +1,3 @@
-import { handleMove, moved_early } from "./joined";
-
 // class EventMessage {
 //   constructor(from, type, value) {
 //     this.from = from;
@@ -8,7 +6,8 @@ import { handleMove, moved_early } from "./joined";
 //   }
 // }
 class WS {
-    constructor(gameID, setIsOpponentJoined) {
+    constructor(gameID, setIsOpponentJoined, setMove) {
+      this.setMove = setMove;
       this.setIsOpponentJoined = setIsOpponentJoined;
 
       let port = window.location.port;
@@ -40,11 +39,12 @@ class WS {
     receiveEvent(event) {
       console.log("Received event: ", event);
       if (event.type === 'error') {
-        moved_early()
+        alert("You moved too early. Please wait for your turn.");
       }
 
       if (event.type === 'move') {
-        handleMove(event);
+        this.setMove(event.move);
+        console.log("Move received: ", event.move);
       }
       if (event.type === 'init') {
         console.log("Opponent joined");

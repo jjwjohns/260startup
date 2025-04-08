@@ -23,7 +23,7 @@ export function Play({userName}) {
           setGames(games);
           localStorage.setItem('games', JSON.stringify(games));
         });
-    }, [games]);
+    }, []);
   
 
   return (

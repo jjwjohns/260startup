@@ -7,17 +7,17 @@ import {WS} from './clientWS';
 import Button from 'react-bootstrap/Button';
 import './play.css';
 
-let move = 0;
+// let move = 0;
 
-export async function handleMove(event) {
-    move = event.move;
-    console.log("Move received: ", move);
-}
+// export async function handleMove(event) {
+//     move = event.move;
+//     console.log("Move received: ", move);
+// }
 
-export async function moved_early() {
-    alert("You moved too early. Please wait for your turn.");
+// export async function moved_early() {
+//     alert("You moved too early. Please wait for your turn.");
 
-}
+// }
 
 // export async function opponent_joined() {
 //     alert("Opponent joined!");
@@ -32,10 +32,25 @@ export function Joined(props) {
         return storedSlots ? JSON.parse(storedSlots) : [0,4,4,4,4,4,4,0,4,4,4,4,4,4];
     });
     const [isOpponentJoined, setIsOpponentJoined] = React.useState(false);
-    // const [move, setMove] = React.useState(0);    
+    const [move, setMove] = React.useState(0);    
+
+    React.useEffect(() => {
+        console.log("Move changed: ", move);
+        if (move !== 0) {
+            console.log("Opponent's move: ", move);
+            setIsWaiting(true);
+            opponent_Move(mancalaSlots, move);
+        }
+    
+      }, [move]);
  
     React.useEffect(() => {
-        const socket = new WS(props.currentGame, setIsOpponentJoined);
+        localStorage.setItem('mancalaSlots', JSON.stringify(mancalaSlots));
+    }
+    , [mancalaSlots]);
+
+    React.useEffect(() => {
+        const socket = new WS(props.currentGame, setIsOpponentJoined, setMove);
         setws(socket);
       
         return () => {
@@ -116,7 +131,7 @@ export function Joined(props) {
         }
     }
 
-    async function opponent_Move(oldSlots) {
+    async function opponent_Move(oldSlots, opponentMove) {
         // await delay(2000);
         if (MancalaLogic.checkEndGame(oldSlots, 2)) {
             const { slots: finalSlots, winner } = MancalaLogic.endGame(oldSlots);
@@ -137,27 +152,33 @@ export function Joined(props) {
             return;
         }
 
-        console.log("move: ", move);
-        while (move == 0){
-            await delay(100);
-        }
-        console.log("move: ", move);
+        // console.log("move: ", move);
+        // while (move == 0){
+        //     await delay(100);
+        // }
+        // console.log("move: ", move);
         
-        let { newSlots, goAgain } = MancalaLogic.makeMove(oldSlots, 2, 7+move);
+        let { newSlots, goAgain } = MancalaLogic.makeMove(oldSlots, 2, 7+opponentMove);
         
         setMancalaSlots(newSlots);
         await new Promise(resolve => setTimeout(resolve, 0));
         // await delay(1000);
-        move = 0;
+        setMove(0);
 
         if (goAgain) {
             await opponent_Move(newSlots);
         }
         props.setMyTurn(true);
         setIsOpponentJoined(true);
+        setIsWaiting(false);
+        return;
     }
 
     async function onPressedPit(pitIndex) {
+        if (mancalaSlots[pitIndex] == 0) {
+            alert("Please choose a non-empty pit.");
+            return;
+        }
         if (isWaiting || !props.myTurn) {
             alert("please wait for your turn.");
             return;
@@ -174,13 +195,7 @@ export function Joined(props) {
             console.error("Error broadcasting move:", error);
             return;
           } 
-        // await delay(1000);
 
-        // if (waiting_opponent) {
-        //     alert("Please wait for another player to join.")
-        //     waiting_opponent = false;
-        //     return;
-        // }
 
         await setIsWaiting(true);
 
@@ -207,6 +222,7 @@ export function Joined(props) {
 
         const { newSlots, goAgain } = MancalaLogic.makeMove(mancalaSlots, 1, pitIndex);
         
+        
         setMancalaSlots(newSlots);
         await new Promise(resolve => setTimeout(resolve, 0));
         // await delay(2000);
@@ -217,8 +233,8 @@ export function Joined(props) {
         }
         
         // await aiMove(newSlots);
-        await opponent_Move(newSlots);
-        setIsWaiting(false);
+        // await opponent_Move(newSlots);
+        // setIsWaiting(false);
     }
 
     // GameNotifier.broadcastEvent(props.currentGame, GameEvent.Start, {});
