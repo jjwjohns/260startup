@@ -12,7 +12,7 @@ class WS {
 
       let port = window.location.port;
       const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-      this.socket = new WebSocket(`${protocol}://${window.location.hostname}:4000/ws`);
+      this.socket = new WebSocket(`${protocol}://${window.location.hostname}:${port}/ws`);
       console.log("initialized");
 
       this.socket.onopen = (event) => {
