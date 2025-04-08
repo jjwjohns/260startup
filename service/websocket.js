@@ -21,7 +21,7 @@ function peerProxy(httpServer) {
         return;
       }
 
-      console.log('Parsed data:', parsedData);
+      // console.log('Parsed data:', parsedData);
 
       gameId = parsedData.from;
       if (!gameId) {
@@ -51,6 +51,8 @@ function peerProxy(httpServer) {
         }
       }
       
+      clients = games.get(gameId);
+
       clients.forEach((client) => {
         if (client !== socket && client.readyState === WebSocket.OPEN) {
           client.send(JSON.stringify({ type: parsedData.type, move: parsedData.data }));

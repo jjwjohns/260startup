@@ -8,17 +8,20 @@ import Button from 'react-bootstrap/Button';
 import './play.css';
 
 let move = 0;
-let waiting_opponent = false;
 
 export async function handleMove(event) {
     move = event.move;
     console.log("Move received: ", move);
 }
 
-export async function waiting_function() {
-    waiting_opponent = true;
-    console.log("Waiting for opponent...");
+export async function moved_early() {
+    alert("You moved too early. Please wait for your turn.");
+
 }
+
+// export async function opponent_joined() {
+//     alert("Opponent joined!");
+// }
 
 export function Joined(props) {
 
@@ -28,10 +31,11 @@ export function Joined(props) {
         const storedSlots = localStorage.getItem('mancalaSlots');
         return storedSlots ? JSON.parse(storedSlots) : [0,4,4,4,4,4,4,0,4,4,4,4,4,4];
     });
+    const [isOpponentJoined, setIsOpponentJoined] = React.useState(false);
     // const [move, setMove] = React.useState(0);    
  
     React.useEffect(() => {
-        const socket = new WS(props.currentGame, waiting_opponent, move);
+        const socket = new WS(props.currentGame, setIsOpponentJoined);
         setws(socket);
       
         return () => {
@@ -46,10 +50,6 @@ export function Joined(props) {
             opponent_Move(mancalaSlots);
         }
     }, []);
-
-    // React.useEffect(() => {
-    //     localStorage.setItem('mancalaSlots', JSON.stringify(mancalaSlots));
-    // }, [mancalaSlots]);
 
     async function quit(gameID) {
         await fetch(`/api/game/${gameID}`, {
@@ -154,6 +154,7 @@ export function Joined(props) {
             await opponent_Move(newSlots);
         }
         props.setMyTurn(true);
+        setIsOpponentJoined(true);
     }
 
     async function onPressedPit(pitIndex) {
@@ -161,14 +162,25 @@ export function Joined(props) {
             alert("please wait for your turn.");
             return;
         }
-        await ws.broadcastEvent({ from: props.currentGame, type: 'move', data: pitIndex });
-        // await delay(1000);
-
-        if (waiting_opponent) {
-            alert("Please wait for another player to join.")
-            waiting_opponent = false;
+        if (!isOpponentJoined){
+            alert("Please wait for another player to join.");
             return;
         }
+
+        try {
+            await ws.broadcastEvent({ from: props.currentGame, type: 'move', data: pitIndex });
+            console.log("Move broadcast successfully");
+          } catch (error) {
+            console.error("Error broadcasting move:", error);
+            return;
+          } 
+        // await delay(1000);
+
+        // if (waiting_opponent) {
+        //     alert("Please wait for another player to join.")
+        //     waiting_opponent = false;
+        //     return;
+        // }
 
         await setIsWaiting(true);
 

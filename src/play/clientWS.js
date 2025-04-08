@@ -1,4 +1,4 @@
-import { handleMove } from "./joined";
+import { handleMove, moved_early } from "./joined";
 
 // class EventMessage {
 //   constructor(from, type, value) {
@@ -8,9 +8,8 @@ import { handleMove } from "./joined";
 //   }
 // }
 class WS {
-    constructor(gameID, waiting_opponent, move) {
-      this.waiting_opponent = waiting_opponent;
-      this.move = move;
+    constructor(gameID, setIsOpponentJoined) {
+      this.setIsOpponentJoined = setIsOpponentJoined;
 
       let port = window.location.port;
       console.log("port: ", port);
@@ -41,15 +40,16 @@ class WS {
     receiveEvent(event) {
       console.log("Received event: ", event);
       if (event.type === 'error') {
-        console.log("Tried to move before opponent joined");
-        waiting_function();
+        moved_early()
       }
 
       if (event.type === 'move') {
         handleMove(event);
       }
       if (event.type === 'init') {
+        console.log("Opponent joined");
         alert("Opponent joined!");
+        this.setIsOpponentJoined(true);
       }
       if (event.type === 'close') {
         alert("Opponent left");
