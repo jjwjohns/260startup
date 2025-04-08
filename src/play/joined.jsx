@@ -171,6 +171,26 @@ export function Joined(props) {
         props.setMyTurn(true);
         setIsOpponentJoined(true);
         setIsWaiting(false);
+
+        if (MancalaLogic.checkEndGame(mancalaSlots, 1)) {
+            const { slots: finalSlots, winner } = MancalaLogic.endGame(mancalaSlots);
+            setMancalaSlots(finalSlots);
+            await new Promise(resolve => setTimeout(resolve, 0));
+            // await delay(1000);
+
+            if (winner == 0) {
+                alert("It's a tie!");
+            }
+            else if (winner == 2) {
+                alert("You Lost!");
+            }
+            else {
+                alert("You win!");
+            }
+            // await delay(1000);
+            onPressedQuit();
+            return;
+        }
         return;
     }
 
@@ -199,6 +219,7 @@ export function Joined(props) {
 
         await setIsWaiting(true);
 
+        const { newSlots, goAgain } = MancalaLogic.makeMove(mancalaSlots, 1, pitIndex);
 
         if (MancalaLogic.checkEndGame(mancalaSlots, 1)) {
             const { slots: finalSlots, winner } = MancalaLogic.endGame(mancalaSlots);
@@ -219,8 +240,6 @@ export function Joined(props) {
             onPressedQuit();
             return;
         }
-
-        const { newSlots, goAgain } = MancalaLogic.makeMove(mancalaSlots, 1, pitIndex);
         
         
         setMancalaSlots(newSlots);
@@ -229,6 +248,26 @@ export function Joined(props) {
 
         if (goAgain) {
             setIsWaiting(false);
+
+            if (MancalaLogic.checkEndGame(mancalaSlots, 1)) {
+                const { slots: finalSlots, winner } = MancalaLogic.endGame(mancalaSlots);
+                setMancalaSlots(finalSlots);
+                await new Promise(resolve => setTimeout(resolve, 0));
+                // await delay(1000);
+    
+                if (winner == 0) {
+                    alert("It's a tie!");
+                }
+                else if (winner == 2) {
+                    alert("You Lost!");
+                }
+                else {
+                    alert("You win!");
+                }
+                // await delay(1000);
+                onPressedQuit();
+                return;
+            }
             return;
         }
         
