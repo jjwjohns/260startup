@@ -11,7 +11,6 @@ class WS {
       this.setIsOpponentJoined = setIsOpponentJoined;
 
       let port = window.location.port;
-      console.log("port: ", port);
       const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
       this.socket = new WebSocket(`${protocol}://${window.location.hostname}:4000/ws`);
       console.log("initialized");
